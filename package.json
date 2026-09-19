@@ -1,0 +1,27 @@
+{
+  "name": "classroom-calm-tech-mvp",
+  "version": "1.0.0",
+  "description": "MVP de EdTech basado en Calm Technology y Clean Architecture",
+  "main": "src/infrastructure/web/server.ts",
+  "scripts": {
+    "start": "tsx src/infrastructure/web/server.ts",
+    "start:console": "tsx src/index.ts",
+    "test": "jest",
+    "db:seed": "tsx src/infrastructure/database/mongo/seed.ts"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^22.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.0",
+    "mongoose": "^8.3.0"
+  }
+}

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classroom Calm Tech - Dashboard del Docente</title>
+  <style>
+    /* ==========================================================================
+       REGLA 1 UX CONSCIENTE: Transiciones orgánicas lentas (2 segundos)
+       Se previene el estrés simpático del docente aplicando transiciones suaves.
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      transition: background-color 2s ease-in-out, color 1.5s ease-in-out, border-color 1.5s ease-in-out;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #F4F7F5;
+      color: #1B5E20;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    header {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-top: 8px;
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    /* ==========================================================================
+       REGLA 3 UX CONSCIENTE: Micro-interacciones lentas dentro del flujo
+       Cero banners emergentes (toasts/popups). La interfaz respira al ritmo del aula.
+       ========================================================================== */
+    .card-content {
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 28px;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      opacity: 1;
+      animation: fadeInSmooth 1.8s ease-in-out;
+    }
+
+    @keyframes fadeInSmooth {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      opacity: 0.9;
+    }
+
+    .message-text {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      white-space: pre-line;
+    }
+
+    /* ==========================================================================
+       REGLA 2 UX CONSCIENTE: Indicación de Audio Armónico No Agresivo
+       ========================================================================== */
+    .audio-indicator {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 16px;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
+
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: currentColor;
+      animation: breathePulse 4s infinite ease-in-out;
+    }
+
+    @keyframes breathePulse {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.4); opacity: 0.9; }
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    button {
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: #FFFFFF;
+      color: inherit;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    }
+
+    button:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .report-box {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <main class="container" role="main" aria-live="polite">
+    <header>
+      <h1>Classroom Calm Tech</h1>
+      <div id="statusBadge" class="status-badge">Cargando estado del aula...</div>
+    </header>
+
+    <section class="card-content" aria-label="Orientación Pedagógica del Aula">
+      <h2 class="section-title">Orientación Pedagógica Consciente</h2>
+      <p id="mensajeEmpatico" class="message-text">Conectando con el servidor Calm Tech...</p>
+      
+      <div id="audioIndicator" class="audio-indicator" style="display: none;">
+        <span class="pulse-dot"></span>
+        <span id="audioText">Frecuencia armónica 432 Hz activa (Fade-In progresivo)</span>
+      </div>
+    </section>
+
+    <nav class="actions-grid" aria-label="Controles del Dashboard">
+      <button onclick="cambiarEstado('Calma')">🌱 Estado: Calma</button>
+      <button onclick="cambiarEstado('Hiperestimulacion')">⚡ Simular Hiperestimulación</button>
+      <button onclick="ejecutarMitigacion()">🧘 Activar Pausa Calm Tech</button>
+      <button onclick="cargarReporte()">📋 Generar Reporte Semanal</button>
+    </nav>
+
+    <article id="reportBox" class="report-box" aria-label="Reporte Psicopedagógico Semanal">
+      <h3 class="section-title">📋 Reporte Psicopedagógico Semanal</h3>
+      <p id="reportContent"></p>
+    </article>
+  </main>
+
+  <script>
+    const API_BASE = 'http://localhost:3000/api';
+
+    async function actualizarUI() {
+      try {
+        const res = await fetch(`${API_BASE}/aula/estado`);
+        const data = await res.json();
+        aplicarEstadoCalmTech(data);
+      } catch (err) {
+        console.error('Error al conectar con la API Calm Tech:', err);
+      }
+    }
+
+    function aplicarEstadoCalmTech(data) {
+      // REGLA 1 UX: Transición cromática orgánica de 2s
+      document.body.style.backgroundColor = data.paleta.colorFondoHex;
+      document.body.style.color = data.paleta.colorTextoHex;
+
+      document.getElementById('statusBadge').innerText = `${data.estadoEmocionalTexto} (${data.paleta.nombrePaleta})`;
+      document.getElementById('mensajeEmpatico').innerText = data.mensajeEmpatico;
+
+      // REGLA 2 UX: Indicador de audio armónico no agresivo
+      const audioElem = document.getElementById('audioIndicator');
+      if (data.audioGuide && data.audioGuide.reproducirTono) {
+        audioElem.style.display = 'flex';
+        document.getElementById('audioText').innerText = `${data.audioGuide.nombreFrecuencia} - ${data.audioGuide.instrumentoOrganico}`;
+      } else {
+        audioElem.style.display = 'none';
+      }
+    }
+
+    async function cambiarEstado(nuevoNivel) {
+      try {
+        await fetch(`${API_BASE}/aulas`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: 'aula-4a', gradoEscolar: '4° Grado Primaria', nivelEnergia: nuevoNivel })
+        });
+        await actualizarUI();
+      } catch (err) {
+        console.error('Error al cambiar el estado:', err);
+      }
+    }
+
+    async function ejecutarMitigacion() {
+      try {
+        const res = await fetch(`${API_BASE}/aulas/aula-4a/mitigar`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ descripcionProfesor: 'Los estudiantes muestran hiperestimulación tras dinámicas digitales.' })
+        });
+        const data = await res.json();
+        if (data.uiState) {
+          aplicarEstadoCalmTech(data.uiState);
+        }
+      } catch (err) {
+        console.error('Error al ejecutar la mitigación:', err);
+      }
+    }
+
+    async function cargarReporte() {
+      try {
+        const res = await fetch(`${API_BASE}/aula/reporte`);
+        const data = await res.json();
+        const reportBox = document.getElementById('reportBox');
+        reportBox.style.display = 'block';
+        document.getElementById('reportContent').innerText = 
+          `${data.resumenEjecutivo}\n\n💡 Recomendaciones Calm Tech:\n` + data.recomendacionesCalmTech.map((r, i) => `${i+1}. ${r}`).join('\n');
+      } catch (err) {
+        console.error('Error al cargar el reporte:', err);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', actualizarUI);
+  </script>
+</body>
+</html>
