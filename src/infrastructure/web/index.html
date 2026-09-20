@@ -60,7 +60,7 @@
       background-color: #1B5E20;
       color: #FFFFFF !important;
       border-color: #1B5E20;
-      box-shadow: 0 3px 10px rgba(27, 94, 32, 0.25);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
     }
 
     h1 {
@@ -360,16 +360,11 @@
     }
 
     .pulse-dot {
-      width: 10px;
-      height: 10px;
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
       background-color: currentColor;
-      animation: breathePulse 4s infinite ease-in-out;
-    }
-
-    @keyframes breathePulse {
-      0%, 100% { transform: scale(1); opacity: 0.4; }
-      50% { transform: scale(1.4); opacity: 0.9; }
+      opacity: 0.85;
     }
 
     .actions-grid {
@@ -398,7 +393,7 @@
       border: none;
       font-weight: 600;
       margin-top: 10px;
-      box-shadow: 0 4px 14px rgba(27, 94, 32, 0.25);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     }
 
     button.btn-primary:hover {
