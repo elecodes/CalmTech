@@ -525,7 +525,7 @@
       document.body.style.backgroundColor = data.paleta.colorFondoHex;
       document.body.style.color = data.paleta.colorTextoHex;
 
-      document.getElementById('statusBadge').innerText = `${data.estadoEmocionalTexto} (${data.paleta.nombrePaleta})`;
+      document.getElementById('statusBadge').innerText = data.estadoEmocionalTexto;
       document.getElementById('mensajeEmpatico').innerText = data.mensajeEmpatico;
 
       // REGLA 2 UX: Indicador de audio armónico no agresivo
