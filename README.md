@@ -1,6 +1,8 @@
 # Classroom Calm Tech - EdTech MVP 🌿
 
-Un MVP de tecnología educativa basado en **Calm Technology**, **Bienestar Digital** y **EdTech Inclusivo / Neurodiversidad** infantil, desarrollado bajo los principios estrictos de **Clean Architecture** (Arquitectura Limpia) en TypeScript, Node.js, Express y MongoDB.
+Un MVP de tecnología educativa basado en **Calm Technology**, **Bienestar Digital** y **EdTech Inclusivo / Neurodiversidad** infantil, desarrollado bajo los principios estrictos de **Clean Architecture** (Arquitectura Limpia) en TypeScript, Node.js, Express, Groq AI SDK y MongoDB.
+
+---
 
 ## 🏛️ Arquitectura del Sistema (Clean Architecture)
 
@@ -10,7 +12,7 @@ El proyecto sigue la regla de dependencia unidireccional hacia adentro:
 +-----------------------------------------------------------------------+
 |  INFRAESTRUCTURA (Express HTTP, Mongoose MongoDB, HTML/CSS Web UI)    |
 |   +---------------------------------------------------------------+   |
-|   |  ADAPTADORES DE INTERFAZ (Presenters UX, Repositorios Mongo)  |   |
+|   |  ADAPTADORES DE INTERFAZ (Presenters UX, Repositorios, Groq)  |   |
 |   |   +-------------------------------------------------------+   |   |
 |   |   |  CAPA DE APLICACIÓN (Use Cases & Ports)               |   |   |
 |   |   |   +-------------------------------+                   |   |   |
@@ -26,9 +28,9 @@ El proyecto sigue la regla de dependencia unidireccional hacia adentro:
 
 ### Capas del Proyecto:
 - **`src/domain/`**: Entidades del modelo de negocio ([AulaEmocional.ts](file:///Users/elena/Developer/Caml_Tech/src/domain/entities/AulaEmocional.ts), [PresupuestoDopamina.ts](file:///Users/elena/Developer/Caml_Tech/src/domain/entities/PresupuestoDopamina.ts)) y Value Objects ([PerfilCognitivo.ts](file:///Users/elena/Developer/Caml_Tech/src/domain/value-objects/PerfilCognitivo.ts)). Sin dependencias de frameworks.
-- **`src/application/`**: Casos de uso ([MitigarSobreestimulacion.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/MitigarSobreestimulacion.ts), [GenerarReporteSemanalAula.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/GenerarReporteSemanalAula.ts), [ValidarYConcederPremioConsciente.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/ValidarYConcederPremioConsciente.ts)) y contratos/puertos.
-- **`src/adapters/`**: Adaptadores de interfaz ([TelemetryPresenter.ts](file:///Users/elena/Developer/Caml_Tech/src/adapters/presenters/TelemetryPresenter.ts), adaptadores Mock de IA y repositorios).
-- **`src/infrastructure/`**: Punto de entrada HTTP con Express ([server.ts](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/web/server.ts)), modelo de base de datos MongoDB Mongoose, script seeder ([seed.ts](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/database/mongo/seed.ts)) y frontend Web accesible ([index.html](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/web/index.html)).
+- **`src/application/`**: Casos de uso ([ConfigurarComposicionAula.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/ConfigurarComposicionAula.ts), [MitigarSobreestimulacion.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/MitigarSobreestimulacion.ts), [GenerarReporteSemanalAula.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/GenerarReporteSemanalAula.ts), [ValidarYConcederPremioConsciente.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/ValidarYConcederPremioConsciente.ts)) y puertos.
+- **`src/adapters/`**: Adaptadores de interfaz ([TimelinePresenter.ts](file:///Users/elena/Developer/Caml_Tech/src/adapters/presenters/TimelinePresenter.ts), [TelemetryPresenter.ts](file:///Users/elena/Developer/Caml_Tech/src/adapters/presenters/TelemetryPresenter.ts), adaptadores reales de IA con Groq y repositorios MongoDB).
+- **`src/infrastructure/`**: Servidor HTTP Express ([server.ts](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/web/server.ts)), persistencia Mongoose, script seeder ([seed.ts](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/database/mongo/seed.ts)) y frontend web accesible de dos columnas ([index.html](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/web/index.html)).
 
 ---
 
@@ -42,6 +44,15 @@ El sistema ajusta dinámicamente los límites biológicos de exposición y recom
 | **`TDAH`** | 20 min | 2 | Evita hiperfoco extenuante y caída dopaminérgica |
 | **`AltaSensibilidad` (PAS)** | 25 min | 1 | Previene la sobreestimulación sensorial por premios |
 | **`TEA`** | 20 min | 1 | Estructura predecible con pausas acotadas |
+
+---
+
+## 🤖 Integración Real con Groq SDK (IA Generativa)
+
+El sistema utiliza la API oficial de **Groq** (`groq-sdk`) impulsada por modelos de lenguaje de baja latencia (`groq/compound-mini` y `qwen/qwen3.8-27b`):
+- **IA Afectiva (`GroqAffectiveAIAdapter`)**: Generación en vivo de pausas activas socráticas de 4 momentos (`max_tokens: 350`).
+- **IA Psicopedagógica (`GroqReporteAIAdapter`)**: Generación de reportes semanales en formato `json_object` estructurado (`max_tokens: 500`).
+- **Resiliencia y Fallback**: Modo de contingencia automático si no se configura la variable `GROQ_API_KEY`.
 
 ---
 
@@ -59,13 +70,17 @@ El sistema ajusta dinámicamente los límites biológicos de exposición y recom
 # 1. Instalar dependencias
 npm install
 
-# 2. Ejecutar suite de pruebas unitarias (Jest)
+# 2. Configurar variables de entorno (crear .env a partir de .env.example)
+cp .env.example .env
+# Agregar tu GROQ_API_KEY en .env
+
+# 3. Ejecutar suite de pruebas unitarias (Jest)
 npm test
 
-# 3. Poblado inicial de datos semilla en MongoDB (5 días lectivos)
+# 4. Poblado inicial de datos semilla en MongoDB (opcional)
 npm run db:seed
 
-# 4. Iniciar el servidor HTTP Express
+# 5. Iniciar el servidor HTTP Express
 npm start
 ```
 
@@ -77,8 +92,10 @@ npm start
 | :--- | :--- | :--- |
 | `GET` | `/health` | Chequeo de salud del servicio y estado de MongoDB |
 | `GET` | `/api/aula/estado` | DTO de estado de UI para el aula por defecto (`aula-4a`) |
-| `GET` | `/api/aula/reporte` | Reporte psicopedagógico semanal del aula por defecto |
+| `GET` | `/api/aula/linea-tiempo` | Histórico visual de bloques de tiempo en tonos pastel |
+| `GET` | `/api/aula/reporte` | Reporte psicopedagógico semanal generado por IA |
 | `GET` | `/api/aulas/:id/ui` | Estado visual y cromático Calm Tech de un aula por ID |
+| `POST` | `/api/aula/configurar` | Registra la composición de alumnos por perfil cognitivo |
 | `POST` | `/api/aulas` | Crea o actualiza el nivel de energía de un aula |
 | `POST` | `/api/aulas/:id/mitigar` | Ejecuta la pausa activa socrática/mindfulness de IA |
 | `POST` | `/api/aulas/:id/reporte-semanal` | Genera un reporte psicopedagógico semanal con IA |

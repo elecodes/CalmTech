@@ -2,6 +2,17 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo siguiendo el formato de [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/) y la convención de [Conventional Commits](https://www.conventionalcommits.org/).
 
+## [1.2.0] - 2026-09-20
+
+### 🚀 Added
+- **Módulo de Configuración del Aula**: Caso de uso `ConfigurarComposicionAula` para registrar y validar la proporción de estudiantes según perfiles cognitivos (`Estandar`, `TDAH`, `AltaSensibilidad`, `TEA`).
+- **Endpoint HTTP de Configuración**: `POST /api/aula/configurar` para recibir composición de alumnos y persistir en telemetría de MongoDB.
+- **Línea de Tiempo Visual de Energía**: Presentador `TimelinePresenter` que transforma eventos de telemetría a bloques de tiempo UI (`BloqueTiempoUI[]`) usando paletas pastel de baja estimulación cognitiva.
+- **Endpoint HTTP de Línea de Tiempo**: `GET /api/aula/linea-tiempo` para alimentar la vista histórica en vivo.
+- **Integración Real con Groq SDK**: Adaptadores `GroqAffectiveAIAdapter` y `GroqReporteAIAdapter` utilizando `groq-sdk` con modelos activos (`groq/compound-mini` y `qwen/qwen3.8-27b`) y soporte para `.env` vía `dotenv`.
+- **Estructura Web UI de Dos Columnas**: Rediseño completo de `index.html` organizando la Configuración Adaptativa y el Monitor de Atmósfera lado a lado junto con la sección de Línea de Tiempo horizontal.
+- **ADR 0003**: Documentación de decisiones sobre configuración del aula, línea de tiempo e integración con Groq SDK.
+
 ## [1.1.0] - 2026-09-19
 
 ### 🚀 Added
