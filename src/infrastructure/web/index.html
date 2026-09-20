@@ -4,11 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Classroom Calm Tech - Dashboard del Docente</title>
+
+  <!-- GOOGLE FONTS: Instrument Serif (Editorial Premium) & Plus Jakarta Sans (Texto de lectura fluida) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+
   <style>
     /* ==========================================================================
-       VARIABLES Y TEMA CROMÁTICO CONSCIENTE (CALM TECH UX)
+       ESPECIFICACIÓN VISUAL "MINDFUL PREMIUM" (HERITAGE + EDITORIAL SERIF)
        ========================================================================== */
     :root {
+      /* Palette Heritage Official Tokens */
+      --bg-base: #F7F5F2;          /* Limestone: Fondo cálido mate */
+      --text-main: #1A1C1E;        /* Deep Ink: Tinta profunda */
+      --slate-border: #6C7278;     /* Slate: Bordes refinados y elementos secundarios */
+      --boston-clay: #B8422E;      /* Terracota: Único acento orgánico activo */
+
+      /* Calm Tech Dynamic States (Sutiles auras de estado) */
       --bg-calma: #F4F7F5;
       --text-calma: #1B5E20;
       --accent-calma: #A5D6A7;
@@ -25,40 +38,44 @@
       --text-saturada: #BF360C;
       --accent-saturada: #FFAB91;
 
-      /* Estado Activo Inicial */
       --bg-current: var(--bg-calma);
       --text-current: var(--text-calma);
       --accent-current: var(--accent-calma);
 
-      --glass-bg: rgba(255, 255, 255, 0.75);
-      --glass-border: rgba(255, 255, 255, 0.5);
-      --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.04);
+      /* Glassmorphism Matte Tokens */
+      --glass-bg: rgba(255, 255, 255, 0.45);
+      --glass-border: rgba(108, 114, 120, 0.22);
+      --glass-shadow: 0 8px 32px rgba(26, 28, 30, 0.04);
+      --radius-md: 8px;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      transition: background-color 2.5s cubic-bezier(0.4, 0, 0.2, 1),
+      transition: background-color 2s cubic-bezier(0.4, 0, 0.2, 1),
                   color 2s cubic-bezier(0.4, 0, 0.2, 1),
                   border-color 2s ease-in-out;
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-      background-color: var(--bg-current);
-      color: var(--text-current);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      background-color: var(--bg-base);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 20px;
+      padding: 32px 24px;
       position: relative;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
     /* ==========================================================================
-       FONDO CON ESFERAS AMBIENTALES FLOTANTES (GLASSMORPHISM)
+       FONDO CON ESFERAS AMBIENTALES FLOTANTES MATE
        ========================================================================== */
     .ambient-background {
       position: fixed;
@@ -74,45 +91,48 @@
     .orb {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.35;
-      transition: background-color 2.5s cubic-bezier(0.4, 0, 0.2, 1);
-      animation: floatOrb 20s infinite ease-in-out alternate;
+      filter: blur(90px);
+      opacity: 0.25;
+      transition: background-color 2s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: floatOrb 22s infinite ease-in-out alternate;
     }
 
     .orb-1 {
-      width: 480px;
-      height: 480px;
-      top: -120px;
-      left: -120px;
+      width: 500px;
+      height: 500px;
+      top: -140px;
+      left: -140px;
       background: var(--accent-current);
     }
 
     .orb-2 {
-      width: 520px;
-      height: 520px;
-      bottom: -160px;
-      right: -120px;
-      background: var(--accent-current);
-      animation-delay: -10s;
+      width: 540px;
+      height: 540px;
+      bottom: -180px;
+      right: -140px;
+      background: var(--boston-clay);
+      opacity: 0.15;
+      animation-delay: -11s;
     }
 
     @keyframes floatOrb {
       0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(70px, 50px) scale(1.08); }
-      100% { transform: translate(-40px, 90px) scale(0.94); }
+      50% { transform: translate(60px, 40px) scale(1.05); }
+      100% { transform: translate(-30px, 70px) scale(0.95); }
     }
 
     /* ==========================================================================
-       HEADER & IDIOMA
+       HEADER & CONMUTADOR DE IDIOMA (EDITORIAL SERIF)
        ========================================================================== */
     header {
       width: 100%;
       max-width: 1180px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(108, 114, 120, 0.2);
     }
 
     .header-brand {
@@ -121,15 +141,22 @@
     }
 
     h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
+      line-height: 1.1;
     }
 
     .header-subtitle {
-      font-size: 0.92rem;
-      opacity: 0.8;
-      margin-top: 2px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      color: var(--slate-border);
+      margin-top: 4px;
     }
 
     .lang-switch-container {
@@ -138,31 +165,38 @@
     }
 
     .lang-btn {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       padding: 8px 16px;
-      border-radius: 50px;
+      border-radius: var(--radius-md);
       font-size: 0.82rem;
-      font-weight: 600;
-      border: 1px solid rgba(0, 0, 0, 0.12);
-      background: rgba(255, 255, 255, 0.8);
-      color: inherit;
+      font-weight: 500;
+      letter-spacing: -0.1px;
+      border: 1px solid var(--slate-border);
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: var(--text-main);
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
       transition: all 0.3s ease;
     }
 
+    .lang-btn:hover {
+      border-color: var(--boston-clay);
+      color: var(--boston-clay);
+    }
+
     .lang-btn.active {
-      background-color: var(--text-current);
+      background-color: var(--text-main);
       color: #FFFFFF !important;
-      border-color: var(--text-current);
-      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+      border-color: var(--text-main);
     }
 
     /* ==========================================================================
-       LAYOUT PRINCIPAL (GRID 3 COLUMNAS / RESPONSIVE)
+       LAYOUT PRINCIPAL (GRID DASHBOARD MINDFUL PREMIUM)
        ========================================================================== */
     .dashboard-layout {
       display: grid;
-      grid-template-columns: 320px 1fr;
+      grid-template-columns: 340px 1fr;
       gap: 28px;
       width: 100%;
       max-width: 1180px;
@@ -176,9 +210,9 @@
 
     .glass-card {
       background: var(--glass-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-radius: 24px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: var(--radius-md);
       padding: 28px;
       border: 1px solid var(--glass-border);
       box-shadow: var(--glass-shadow);
@@ -187,8 +221,12 @@
     }
 
     .card-title {
-      font-size: 1.2rem;
-      font-weight: 600;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.65rem;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -196,101 +234,116 @@
     }
 
     .card-subtitle {
-      font-size: 0.85rem;
-      opacity: 0.78;
-      line-height: 1.4;
-      margin-bottom: 20px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      color: var(--slate-border);
+      line-height: 1.5;
+      margin-bottom: 22px;
     }
 
     /* ==========================================================================
-       BLOQUE 1: CONFIGURACIÓN ADAPTATIVA (SLIDERS SUAVES)
+       BLOQUE 1: CONFIGURACIÓN ADAPTATIVA (SLIDERS MINDFUL PREMIUM)
        ========================================================================== */
     .slider-group {
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .slider-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     label {
-      font-size: 0.88rem;
-      font-weight: 600;
-      opacity: 0.9;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: -0.1px;
+      color: var(--text-main);
     }
 
     .slider-val-badge {
-      font-size: 0.82rem;
-      font-weight: 700;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: -0.1px;
       padding: 2px 10px;
-      border-radius: 12px;
-      background: rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius-md);
+      background: rgba(108, 114, 120, 0.12);
+      color: var(--text-main);
     }
 
     input[type="range"] {
       -webkit-appearance: none;
       width: 100%;
-      height: 8px;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.08);
+      height: 6px;
+      border-radius: var(--radius-md);
+      background: rgba(108, 114, 120, 0.2);
       outline: none;
-      margin: 6px 0 8px 0;
+      margin: 8px 0 10px 0;
       transition: background 0.3s ease;
     }
 
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      background: var(--text-current);
+      background: var(--boston-clay);
       cursor: pointer;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 2px 6px rgba(184, 66, 46, 0.3);
       transition: transform 0.2s ease;
     }
 
     input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
+      transform: scale(1.2);
     }
 
     .profile-tag {
       display: inline-block;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       font-size: 0.76rem;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: rgba(0, 0, 0, 0.05);
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      padding: 4px 10px;
+      border-radius: var(--radius-md);
+      background: rgba(108, 114, 120, 0.08);
+      color: var(--slate-border);
       white-space: nowrap;
     }
 
     .btn-primary {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       padding: 14px 20px;
-      border-radius: 14px;
-      font-size: 0.92rem;
+      border-radius: var(--radius-md);
+      font-size: 0.88rem;
       font-weight: 600;
+      letter-spacing: -0.1px;
       border: none;
-      background-color: var(--text-current);
+      background-color: var(--boston-clay);
       color: #FFFFFF !important;
       cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
-      margin-top: 12px;
+      box-shadow: 0 4px 14px rgba(184, 66, 46, 0.2);
+      margin-top: 14px;
       transition: all 0.3s ease;
     }
 
     .btn-primary:hover {
       filter: brightness(1.1);
       transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(184, 66, 46, 0.3);
     }
 
     .config-feedback {
       margin-top: 18px;
       padding: 14px 18px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--glass-border);
       font-size: 0.88rem;
       line-height: 1.4;
       display: none;
@@ -304,15 +357,18 @@
     }
 
     .stat-badge {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       padding: 4px 12px;
-      border-radius: 50px;
+      border-radius: var(--radius-md);
       font-size: 0.8rem;
-      font-weight: 600;
-      background: rgba(0, 0, 0, 0.06);
+      font-weight: 500;
+      letter-spacing: -0.1px;
+      background: rgba(108, 114, 120, 0.12);
+      color: var(--text-main);
     }
 
     /* ==========================================================================
-       BLOQUE 2: MONITOR DE ATMÓSFERA CIRCULAR QUE RESPIRA
+       BLOQUE 2: MONITOR DE ATMÓSFERA CIRCULAR CON EDITORIAL SERIF
        ========================================================================== */
     .monitor-column {
       display: flex;
@@ -329,9 +385,9 @@
 
     .breathing-ring-wrapper {
       position: relative;
-      width: 170px;
-      height: 170px;
-      margin: 10px auto 20px auto;
+      width: 175px;
+      height: 175px;
+      margin: 12px auto 22px auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -342,16 +398,17 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
-      border: 4px solid var(--accent-current);
+      border: 3px solid var(--slate-border);
+      opacity: 0.4;
       animation: breatheScale 6s infinite ease-in-out;
     }
 
     @keyframes breatheScale {
-      0%, 100% { transform: scale(1); opacity: 0.5; }
-      50% { transform: scale(1.08); opacity: 0.95; }
+      0%, 100% { transform: scale(1); opacity: 0.4; border-color: var(--slate-border); }
+      50% { transform: scale(1.08); opacity: 0.9; border-color: var(--boston-clay); }
     }
 
-    .ring-center-content {
+    .ring-status-container {
       position: relative;
       z-index: 2;
       display: flex;
@@ -361,14 +418,20 @@
     }
 
     .ring-status-text {
-      font-size: 1.15rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
     }
 
     .ring-status-sub {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       font-size: 0.78rem;
-      opacity: 0.8;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      color: var(--slate-border);
       margin-top: 4px;
     }
 
@@ -376,40 +439,47 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-top: 10px;
+      gap: 12px;
+      margin-top: 12px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      color: var(--slate-border);
     }
 
     .static-dot {
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background-color: currentColor;
-      opacity: 0.85;
+      background-color: var(--boston-clay);
     }
 
     .btn-audio-trigger {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       padding: 6px 14px;
-      border-radius: 20px;
+      border-radius: var(--radius-md);
       font-size: 0.8rem;
-      font-weight: 600;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      background: rgba(255, 255, 255, 0.9);
-      color: inherit;
+      font-weight: 500;
+      letter-spacing: -0.1px;
+      border: 1px solid var(--slate-border);
+      background: var(--glass-bg);
+      color: var(--text-main);
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .btn-audio-trigger:hover {
-      transform: scale(1.04);
+      border-color: var(--boston-clay);
+      color: var(--boston-clay);
+      transform: scale(1.03);
     }
 
     .pedagogical-box {
-      background: rgba(255, 255, 255, 0.65);
-      border-radius: 18px;
-      padding: 20px 24px;
-      border: 1px solid rgba(0, 0, 0, 0.04);
+      background: rgba(255, 255, 255, 0.55);
+      border-radius: var(--radius-md);
+      padding: 22px 26px;
+      border: 1px solid var(--glass-border);
       animation: fadeInSmooth 1.5s ease-in-out;
       text-align: left;
     }
@@ -420,35 +490,44 @@
     }
 
     .pedagogical-title {
-      font-size: 1rem;
-      font-weight: 600;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
       margin-bottom: 8px;
-      opacity: 0.9;
     }
 
     .pedagogical-text {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       font-size: 0.95rem;
-      line-height: 1.6;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      line-height: 1.65;
+      color: var(--text-main);
       white-space: pre-line;
     }
 
     .actions-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 12px;
-      margin-top: 16px;
+      margin-top: 18px;
     }
 
     .btn-action {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       padding: 14px 18px;
-      border-radius: 14px;
-      font-size: 0.9rem;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
       font-weight: 500;
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      background: rgba(255, 255, 255, 0.9);
-      color: inherit;
+      letter-spacing: -0.1px;
+      border: 1px solid var(--slate-border);
+      background: var(--glass-bg);
+      color: var(--text-main);
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+      box-shadow: 0 2px 8px rgba(26, 28, 30, 0.02);
       transition: all 0.3s ease;
       display: flex;
       align-items: center;
@@ -457,23 +536,26 @@
     }
 
     .btn-action:hover {
+      border-color: var(--boston-clay);
+      color: var(--boston-clay);
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 12px rgba(184, 66, 46, 0.1);
     }
 
     .report-box {
-      margin-top: 16px;
-      padding: 20px;
-      border-radius: 18px;
-      background: rgba(255, 255, 255, 0.75);
+      margin-top: 18px;
+      padding: 22px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid var(--glass-border);
       font-size: 0.9rem;
-      line-height: 1.6;
+      line-height: 1.65;
       display: none;
       animation: fadeInSmooth 1.5s ease-in-out;
     }
 
     /* ==========================================================================
-       BLOQUE 3: LÍNEA DE TIEMPO DE PÍLDORAS CROMÁTICAS FLUIDAS (INFERIOR)
+       BLOQUE 3: LÍNEA DE TIEMPO DE PÍLDORAS MINDFUL PREMIUM
        ========================================================================== */
     .timeline-section {
       width: 100%;
@@ -485,27 +567,34 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .timeline-title {
-      font-size: 1.15rem;
-      font-weight: 600;
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: 1.55rem;
+      font-weight: 400;
+      font-style: italic;
+      letter-spacing: 0.5px;
+      color: var(--text-main);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .timeline-subtitle {
-      font-size: 0.85rem;
-      opacity: 0.75;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      color: var(--slate-border);
     }
 
     .timeline-pills-wrapper {
       display: flex;
-      gap: 14px;
+      gap: 16px;
       overflow-x: auto;
-      padding: 8px 4px 16px 4px;
+      padding: 6px 4px 16px 4px;
       scroll-behavior: smooth;
     }
 
@@ -514,27 +603,27 @@
     }
 
     .timeline-pills-wrapper::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.03);
-      border-radius: 10px;
+      background: rgba(108, 114, 120, 0.08);
+      border-radius: var(--radius-md);
     }
 
     .timeline-pills-wrapper::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.12);
-      border-radius: 10px;
+      background: var(--slate-border);
+      border-radius: var(--radius-md);
     }
 
     .timeline-pill {
       flex: 0 0 auto;
-      min-width: 220px;
-      max-width: 280px;
-      border-radius: 20px;
-      padding: 14px 18px;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
-      border: 1px solid rgba(0, 0, 0, 0.04);
+      min-width: 230px;
+      max-width: 290px;
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      box-shadow: 0 4px 12px rgba(26, 28, 30, 0.03);
+      border: 1px solid var(--glass-border);
       animation: fadeInSmooth 1.5s ease-in-out;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
       position: relative;
     }
 
@@ -543,30 +632,37 @@
       justify-content: space-between;
       align-items: center;
       font-size: 0.82rem;
-      font-weight: 600;
-      opacity: 0.9;
     }
 
     .pill-time {
-      font-weight: 700;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-weight: 500;
       font-size: 0.85rem;
+      letter-spacing: -0.1px;
     }
 
     .pill-tag {
-      font-size: 0.84rem;
-      font-weight: 600;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: -0.1px;
     }
 
     .pill-desc {
-      font-size: 0.86rem;
-      line-height: 1.4;
-      opacity: 0.95;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      line-height: 1.45;
     }
 
     .timeline-empty {
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
       font-size: 0.9rem;
-      opacity: 0.75;
-      padding: 16px;
+      font-weight: 400;
+      letter-spacing: -0.1px;
+      color: var(--slate-border);
+      padding: 18px;
       text-align: center;
       width: 100%;
     }
@@ -580,7 +676,7 @@
     <div class="orb orb-2"></div>
   </div>
 
-  <!-- Encabezado con Switcher de Idioma -->
+  <!-- Encabezado con Conmutador de Idioma -->
   <header>
     <div class="header-brand">
       <h1 id="i18nHeaderTitle">Classroom Calm Tech</h1>
@@ -687,7 +783,7 @@
 
         <article id="reportBox" class="report-box" style="width: 100%;" aria-label="Reporte Psicopedagógico Semanal">
           <h3 id="i18nReportTitle" class="pedagogical-title">📋 Reporte Psicopedagógico Semanal</h3>
-          <p id="reportContent"></p>
+          <p id="reportContent" class="pedagogical-text"></p>
         </article>
       </div>
     </section>
@@ -915,7 +1011,6 @@
     }
 
     function aplicarEstadoCalmTech(data) {
-      // Regla 1 & 3 UX: Transición cromática suave de variables CSS (2.5s)
       const root = document.documentElement;
 
       root.style.setProperty('--bg-current', data.paleta.colorFondoHex);

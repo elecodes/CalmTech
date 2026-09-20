@@ -18,11 +18,21 @@ Para elevar la experiencia de usuario del educador en el dashboard de **Classroo
 
 ## 🎯 Decisión
 
-1. **Estética Glassmorphic & Variables CSS**:
-   - Definir variables CSS para los 4 estados emocionales del aula con una transición suave de `transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1)`.
-   - Utilizar tarjetas de cristal esmerilado con `backdrop-filter: blur(16px)` y sombras de elevación neutras.
+1. **Estética Heritage & Glassmorphism Matte**:
+   - Aplicar las variables cromáticas oficiales del tema Heritage (`google-labs-code/design.md`):
+     - `--bg-base: #F7F5F2` (Limestone): Fondo mate cálido.
+     - `--text-main: #1A1C1E` (Deep Ink): Contraste periodístico profundo.
+     - `--slate-border: #6C7278` (Slate): Bordes refinados y elementos secundarios.
+     - `--boston-clay: #B8422E` (Terracota): Único acento orgánico activo para botones e interacción.
+   - Definir tarjetas Glassmorphic mate con fondo translúcido (`rgba(255, 255, 255, 0.45)`), `backdrop-filter: blur(12px)`, bordes delgados de `1px solid var(--glass-border)` y bordes pulidos de `8px` (`rounded.md`).
+   - Mantener cambios cromáticos fluidos de 2 segundos en transiciones de estado.
 
-2. **Síntesis Sonora Nativa Neuroacústica (Web Audio API)**:
+2. **Tipografía Estructurada "Mindful Premium"**:
+   - **`Instrument Serif`** (Google Fonts): Aplicada en cursiva editorial (`font-style: italic`, `font-weight: 400`, `letter-spacing: 0.5px`) para los titulares principales (`h1`, `h2`, `h3`) y el indicador de atmósfera grande (`.ring-status-text`).
+   - **`Plus Jakarta Sans`** (Google Fonts): Aplicada para el cuerpo de texto, guiones pedagógicos de IA, controles de rango, etiquetas e indicadores.
+   - **Marcas de Tiempo de Línea de Tiempo (`.pill-time`)**: Uso de la variante `font-weight: 500` de Plus Jakarta Sans para mantener la nitidez y legibilidad sin recurrir a fuentes toscas.
+
+3. **Síntesis Sonora Nativa Neuroacústica (Web Audio API)**:
    - Implementar un motor neuroacústico de 3 osciladores senoidales:
      - Oscilador Izquierdo (`430 Hz`, stereo panner `-0.8`).
      - Oscilador Derecho (`434 Hz`, stereo panner `0.8`).
@@ -30,10 +40,10 @@ Para elevar la experiencia de usuario del educador en el dashboard de **Classroo
      - Oscilador Armónico (`864 Hz`, 1er armónico natural) con volumen atenuado (`0.03`) para aportar calidez de cuenco tibetano.
    - Aplicar una envolvente de volumen maestra con *fade-in* lineal suave de `800ms` y *fade-out* exponencial de `4s` (duración total 4.8s) sin depender de librerías de terceros.
 
-3. **Controles de Configuración con Sliders Interactivos**:
+4. **Controles de Configuración con Sliders Interactivos**:
    - Sustituir los selectores rígidos por sliders de rango con badges de valor dinámico para calibrar los grupos de neurodiversidad (Estándar, TDAH, PAS, TEA).
 
-4. **Línea de Tiempo Continua e i18n Bilingüe (`ES | EN`)**:
+5. **Línea de Tiempo Continua e i18n Bilingüe (`ES | EN`)**:
    - Píldoras cromáticas fluidas con tooltips descriptivos.
    - Conmutador directo de idioma (`🇪🇸 ES | 🇬🇧 EN`) que persiste en `localStorage`.
    - Corrección y estandarización de traducciones y ortografía de estados emocionales: `Hiperestimulación` (Español con tilde) y `Overstimulation` (Inglés).
@@ -43,6 +53,6 @@ Para elevar la experiencia de usuario del educador en el dashboard de **Classroo
 ## ⚖️ Consecuencias
 
 ### Positivas:
-- **Reducción de Estrés del Docente & Estimulación Neuroacústica**: La interfaz transmite calma visual y estimulación alfa sonora no invasiva, eliminando notificaciones intrusivas.
+- **Reducción de Estrés del Docente & Estimulación Neuroacústica**: La interfaz transmite calma visual, gravitas periodística con elegancia editorial y estimulación alfa sonora no invasiva, eliminando notificaciones intrusivas.
 - **Cero Dependencias Externas**: Carga ultra-rápida en Vanilla JS + CSS nativo.
 - **Calidad Certificada**: Aprobación de 0 antipatrones en el escáner de Impeccable (`npx impeccable detect`).
