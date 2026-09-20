@@ -16,6 +16,7 @@ import { TelemetryPresenter } from '../../adapters/presenters/TelemetryPresenter
 import { MitigarSobreestimulacion } from '../../application/use-cases/MitigarSobreestimulacion';
 import { GenerarReporteSemanalAula } from '../../application/use-cases/GenerarReporteSemanalAula';
 import { ValidarYConcederPremioConsciente } from '../../application/use-cases/ValidarYConcederPremioConsciente';
+import { ConfigurarComposicionAula } from '../../application/use-cases/ConfigurarComposicionAula';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -74,6 +75,11 @@ async function iniciarServidor() {
     telemetriaRepository
   );
 
+  const configurarComposicionUseCase = new ConfigurarComposicionAula(
+    telemetriaRepository,
+    aulaRepository
+  );
+
   // Inicializar aula demo por defecto
   const aulaDemo = new AulaEmocional('aula-4a', '4° Grado Primaria', 'Hiperestimulacion');
   await aulaRepository.guardar(aulaDemo);
@@ -81,6 +87,33 @@ async function iniciarServidor() {
   // =========================================================================================
   // RUTAS / ENDPOINTS DE LA API REST (HTTP PORT ADAPTER)
   // =========================================================================================
+
+  /**
+   * POST /api/aula/configurar
+   * Módulo de Configuración del Aula (Opción A): Registra y valida la composición de alumnos según perfiles cognitivos.
+   */
+  app.post('/api/aula/configurar', async (req: Request, res: Response) => {
+    try {
+      const { aulaId, composicion } = req.body as {
+        aulaId?: string;
+        composicion: {
+          estandar: number;
+          tdah: number;
+          altaSensibilidad: number;
+          tea: number;
+        };
+      };
+
+      const resultado = await configurarComposicionUseCase.ejecutar({
+        aulaId: aulaId || 'aula-4a',
+        composicion
+      });
+
+      return res.status(200).json(resultado);
+    } catch (error: any) {
+      return res.status(400).json({ error: error.message });
+    }
+  });
 
   app.get('/health', (_req: Request, res: Response) => {
     res.json({

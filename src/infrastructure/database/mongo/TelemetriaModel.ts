@@ -17,7 +17,8 @@ const TelemetriaSchema: Schema = new Schema(
         'ALERTA_SOBREESTIMULACION',
         'PAUSA_ACTIVADA',
         'BLOQUEO_DOPAMINA_SALUD_DIGITAL',
-        'RECOMPENSA_CONSCIENTE_CONCEDIDA'
+        'RECOMPENSA_CONSCIENTE_CONCEDIDA',
+        'CONFIGURACION_COMPOSICION_AULA'
       ]
     },
     aulaId: {

@@ -21,42 +21,159 @@
       background-color: #F4F7F5;
       color: #1B5E20;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 20px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 800px;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      border-radius: 24px;
-      padding: 40px;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      padding: 30px 20px;
     }
 
     header {
       margin-bottom: 32px;
       text-align: center;
+      max-width: 800px;
     }
 
     h1 {
-      font-size: 1.8rem;
+      font-size: 2.1rem;
       font-weight: 600;
       letter-spacing: -0.02em;
       margin-bottom: 8px;
     }
 
+    .header-subtitle {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    /* ==========================================================================
+       ESTRUCTURA DE DOS COLUMNAS: Configuración Adaptativa + Monitor de Atmósfera
+       ========================================================================== */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      width: 100%;
+      max-width: 1140px;
+    }
+
+    @media (max-width: 900px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      margin-bottom: 24px;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .card-subtitle {
+      font-size: 0.9rem;
+      opacity: 0.75;
+      line-height: 1.4;
+    }
+
+    /* ==========================================================================
+       FORMULARIO DE CONFIGURACIÓN ADAPTATIVA (COLUMNA 1)
+       ========================================================================== */
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.92rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      opacity: 0.9;
+    }
+
+    .input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      background: rgba(255, 255, 255, 0.9);
+      font-size: 1rem;
+      color: inherit;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input[type="number"]:focus {
+      border-color: currentColor;
+      box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.1);
+    }
+
+    .profile-tag {
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, 0.05);
+      white-space: nowrap;
+    }
+
+    .config-feedback {
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      font-size: 0.92rem;
+      line-height: 1.5;
+      display: none;
+      animation: fadeInSmooth 1.5s ease-in-out;
+    }
+
+    .stats-summary {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .stat-badge {
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    /* ==========================================================================
+       MONITOR DE ATMÓSFERA DEL AULA (COLUMNA 2)
+       ========================================================================== */
     .status-badge {
       display: inline-block;
       padding: 6px 16px;
       border-radius: 50px;
       font-size: 0.9rem;
       font-weight: 500;
-      margin-top: 8px;
+      margin-top: 6px;
       background: rgba(0, 0, 0, 0.05);
     }
 
@@ -67,8 +184,8 @@
     .card-content {
       background: rgba(255, 255, 255, 0.6);
       border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 28px;
+      padding: 20px;
+      margin-bottom: 24px;
       border: 1px solid rgba(0, 0, 0, 0.03);
       opacity: 1;
       animation: fadeInSmooth 1.8s ease-in-out;
@@ -80,14 +197,14 @@
     }
 
     .section-title {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       opacity: 0.9;
     }
 
     .message-text {
-      font-size: 1.05rem;
+      font-size: 1rem;
       line-height: 1.6;
       white-space: pre-line;
     }
@@ -99,8 +216,8 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-top: 16px;
-      font-size: 0.9rem;
+      margin-top: 14px;
+      font-size: 0.88rem;
       opacity: 0.85;
     }
 
@@ -119,15 +236,15 @@
 
     .actions-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-top: 24px;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
     }
 
     button {
       padding: 14px 20px;
       border-radius: 14px;
-      font-size: 0.95rem;
+      font-size: 0.92rem;
       font-weight: 500;
       border: 1px solid rgba(0, 0, 0, 0.1);
       background: #FFFFFF;
@@ -135,6 +252,19 @@
       cursor: pointer;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
       transition: all 0.3s ease;
+    }
+
+    button.btn-primary {
+      background: currentColor;
+      color: #FFFFFF;
+      border: none;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    body[style*="background-color"] button.btn-primary {
+      color: #FFFFFF;
+      filter: brightness(0.85);
     }
 
     button:hover {
@@ -152,44 +282,108 @@
     }
 
     .report-box {
-      margin-top: 24px;
+      margin-top: 20px;
       padding: 20px;
       border-radius: 16px;
       background: rgba(255, 255, 255, 0.7);
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       line-height: 1.6;
       display: none;
+      animation: fadeInSmooth 1.5s ease-in-out;
     }
   </style>
 </head>
 <body>
-  <main class="container" role="main" aria-live="polite">
-    <header>
-      <h1>Classroom Calm Tech</h1>
-      <div id="statusBadge" class="status-badge">Cargando estado del aula...</div>
-    </header>
+  <header>
+    <h1>Classroom Calm Tech</h1>
+    <p class="header-subtitle">Plataforma Educativa Adaptativa y Regulación Emocional Consciente</p>
+  </header>
 
-    <section class="card-content" aria-label="Orientación Pedagógica del Aula">
-      <h2 class="section-title">Orientación Pedagógica Consciente</h2>
-      <p id="mensajeEmpatico" class="message-text">Conectando con el servidor Calm Tech...</p>
-      
-      <div id="audioIndicator" class="audio-indicator" style="display: none;">
-        <span class="pulse-dot"></span>
-        <span id="audioText">Frecuencia armónica 432 Hz activa (Fade-In progresivo)</span>
+  <!-- Estructura Principal de Dos Columnas -->
+  <main class="dashboard-grid" role="main" aria-live="polite">
+    
+    <!-- COLUMNA 1: Configuración Adaptativa del Aula (Opción A) -->
+    <section class="card" aria-labelledby="titleConfig">
+      <div class="card-header">
+        <h2 id="titleConfig" class="card-title">⚙️ Configuración Adaptativa</h2>
+        <p class="card-subtitle">Registra la composición de alumnos según sus perfiles cognitivos para adaptar el presupuesto de salud digital.</p>
+      </div>
+
+      <form id="configForm" onsubmit="guardarConfiguracion(event)">
+        <div class="form-group">
+          <label for="numEstandar">Alumnos Estándar</label>
+          <div class="input-wrapper">
+            <input type="number" id="numEstandar" min="0" value="15" required />
+            <span class="profile-tag">30 min / 3 premios</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="numTdah">Alumnos TDAH</label>
+          <div class="input-wrapper">
+            <input type="number" id="numTdah" min="0" value="5" required />
+            <span class="profile-tag">20 min / 2 premios</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="numAltaSensibilidad">Alumnos Alta Sensibilidad (PAS)</label>
+          <div class="input-wrapper">
+            <input type="number" id="numAltaSensibilidad" min="0" value="3" required />
+            <span class="profile-tag">25 min / 1 premio</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="numTea">Alumnos Espectro Autista (TEA)</label>
+          <div class="input-wrapper">
+            <input type="number" id="numTea" min="0" value="2" required />
+            <span class="profile-tag">20 min / 1 premio</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" id="btnAplicarConfig">Aplicar Configuración</button>
+      </form>
+
+      <div id="configResultBox" class="config-feedback" aria-live="polite">
+        <p id="configMsgText"></p>
+        <div id="statsSummary" class="stats-summary" style="display: none;">
+          <span id="badgeTotal" class="stat-badge"></span>
+          <span id="badgeNeuro" class="stat-badge"></span>
+        </div>
       </div>
     </section>
 
-    <nav class="actions-grid" aria-label="Controles del Dashboard">
-      <button onclick="cambiarEstado('Calma')">🌱 Estado: Calma</button>
-      <button onclick="cambiarEstado('Hiperestimulacion')">⚡ Simular Hiperestimulación</button>
-      <button onclick="ejecutarMitigacion()">🧘 Activar Pausa Calm Tech</button>
-      <button onclick="cargarReporte()">📋 Generar Reporte Semanal</button>
-    </nav>
+    <!-- COLUMNA 2: Monitor de Atmósfera (Monitor del Profesor) -->
+    <section class="card" aria-labelledby="titleMonitor">
+      <div class="card-header">
+        <h2 id="titleMonitor" class="card-title">🌿 Monitor de Atmósfera</h2>
+        <div id="statusBadge" class="status-badge">Cargando estado del aula...</div>
+      </div>
 
-    <article id="reportBox" class="report-box" aria-label="Reporte Psicopedagógico Semanal">
-      <h3 class="section-title">📋 Reporte Psicopedagógico Semanal</h3>
-      <p id="reportContent"></p>
-    </article>
+      <div class="card-content" aria-label="Orientación Pedagógica del Aula">
+        <h3 class="section-title">Orientación Pedagógica Consciente</h3>
+        <p id="mensajeEmpatico" class="message-text">Conectando con el servidor Calm Tech...</p>
+        
+        <div id="audioIndicator" class="audio-indicator" style="display: none;">
+          <span class="pulse-dot"></span>
+          <span id="audioText">Frecuencia armónica 432 Hz activa (Fade-In progresivo)</span>
+        </div>
+      </div>
+
+      <nav class="actions-grid" aria-label="Controles del Dashboard">
+        <button onclick="cambiarEstado('Calma')">🌱 Estado: Calma</button>
+        <button onclick="cambiarEstado('Hiperestimulacion')">⚡ Simular Hiperestimulación</button>
+        <button onclick="ejecutarMitigacion()">🧘 Activar Pausa Calm Tech</button>
+        <button onclick="cargarReporte()">📋 Generar Reporte Semanal</button>
+      </nav>
+
+      <article id="reportBox" class="report-box" aria-label="Reporte Psicopedagógico Semanal">
+        <h3 class="section-title">📋 Reporte Psicopedagógico Semanal</h3>
+        <p id="reportContent"></p>
+      </article>
+    </section>
+
   </main>
 
   <script>
@@ -220,6 +414,51 @@
         document.getElementById('audioText').innerText = `${data.audioGuide.nombreFrecuencia} - ${data.audioGuide.instrumentoOrganico}`;
       } else {
         audioElem.style.display = 'none';
+      }
+    }
+
+    async function guardarConfiguracion(event) {
+      event.preventDefault();
+
+      const composicion = {
+        estandar: parseInt(document.getElementById('numEstandar').value, 10) || 0,
+        tdah: parseInt(document.getElementById('numTdah').value, 10) || 0,
+        altaSensibilidad: parseInt(document.getElementById('numAltaSensibilidad').value, 10) || 0,
+        tea: parseInt(document.getElementById('numTea').value, 10) || 0
+      };
+
+      try {
+        const res = await fetch(`${API_BASE}/aula/configurar`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            aulaId: 'aula-4a',
+            composicion
+          })
+        });
+
+        const data = await res.json();
+        const resultBox = document.getElementById('configResultBox');
+        const msgText = document.getElementById('configMsgText');
+        const statsSummary = document.getElementById('statsSummary');
+
+        resultBox.style.display = 'block';
+
+        if (res.ok && data.exito) {
+          msgText.innerText = `✅ ${data.mensaje}`;
+          
+          document.getElementById('badgeTotal').innerText = `Total: ${data.totalAlumnos} alumnos`;
+          document.getElementById('badgeNeuro').innerText = `Neurodiversidad: ${data.porcentajeNeurodivergencia}%`;
+          statsSummary.style.display = 'flex';
+        } else {
+          msgText.innerText = `⚠️ Error: ${data.error || 'No se pudo guardar la configuración.'}`;
+          statsSummary.style.display = 'none';
+        }
+      } catch (err) {
+        console.error('Error al guardar la configuración:', err);
+        const resultBox = document.getElementById('configResultBox');
+        resultBox.style.display = 'block';
+        document.getElementById('configMsgText').innerText = '⚠️ Error de conexión al guardar la configuración.';
       }
     }
 
