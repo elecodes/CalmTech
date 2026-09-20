@@ -13,6 +13,7 @@ import { InMemoryTelemetriaRepository } from '../../adapters/persistence/InMemor
 import { MongoTelemetriaRepository } from '../../adapters/persistence/MongoTelemetriaRepository';
 import { ITelemetriaRepository } from '../../application/ports/ITelemetriaRepository';
 import { TelemetryPresenter } from '../../adapters/presenters/TelemetryPresenter';
+import { TimelinePresenter } from '../../adapters/presenters/TimelinePresenter';
 import { MitigarSobreestimulacion } from '../../application/use-cases/MitigarSobreestimulacion';
 import { GenerarReporteSemanalAula } from '../../application/use-cases/GenerarReporteSemanalAula';
 import { ValidarYConcederPremioConsciente } from '../../application/use-cases/ValidarYConcederPremioConsciente';
@@ -58,6 +59,7 @@ async function iniciarServidor() {
   const aiReporteAdapter = new MockReporteAIAdapter();
   const aulaRepository = new InMemoryAulaRepository();
   const telemetryPresenter = new TelemetryPresenter();
+  const timelinePresenter = new TimelinePresenter();
 
   const mitigarSobreestimulacionUseCase = new MitigarSobreestimulacion(
     aiAffectiveAdapter,
@@ -112,6 +114,22 @@ async function iniciarServidor() {
       return res.status(200).json(resultado);
     } catch (error: any) {
       return res.status(400).json({ error: error.message });
+    }
+  });
+
+  /**
+   * GET /api/aula/linea-tiempo
+   * Línea de Tiempo Visual de Energía (Fase 1 - Opción 2)
+   * Obtiene el histórico de eventos del aula desde el repositorio y los formatea a 'BloqueTiempoUI[]'.
+   */
+  app.get('/api/aula/linea-tiempo', async (req: Request, res: Response) => {
+    try {
+      const aulaId = (req.query.aulaId as string) || 'aula-4a';
+      const eventos = await telemetriaRepository.obtenerEventosPorAula(aulaId);
+      const bloquesUI = timelinePresenter.presentarLineaTiempo(eventos);
+      return res.json(bloquesUI);
+    } catch (error: any) {
+      return res.status(500).json({ error: error.message });
     }
   });
 
