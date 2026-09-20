@@ -59,7 +59,7 @@ El sistema utiliza la API oficial de **Groq** (`groq-sdk`) impulsada por modelos
 ## 🎨 3 Reglas de Oro de UX Consciente (Calm Tech)
 
 1. **Transiciones Orgánicas (2s)**: Cambios cromáticos progresivos (`transition: background-color 2s ease-in-out`) que evitan micro-alertas de estrés en el educador.
-2. **Audio No Agresivo**: Frecuencia binaural armónica de 432 Hz con envolvente *fade-in/fade-out* progresiva (1500ms) ejecutada mediante instrumentos orgánicos (cuenco tibetano).
+2. **Audio No Agresivo (Motor Neuroacústico 432 Hz + Binaural Alfa)**: Frecuencia de Resonancia Armónica de 432 Hz con estimulación binaural Alfa (4 Hz de diferencial estéreo: 430 Hz canal izquierdo / 434 Hz canal derecho) y armónico superior (864 Hz) con envolvente maestra de *fade-in* (800ms) y *fade-out* exponencial (4s) simulando un cuenco tibetano sin clics ni tonos bruscamente interrumpidos.
 3. **Micro-interacciones Lentas (Sin Popups/Toasts)**: Eliminación de banners emergentes e interrupciones abruptas. La UI respira al ritmo del aula.
 
 ---

@@ -7,12 +7,12 @@ Todos los cambios notables en este proyecto serán documentados en este archivo 
 ### 🚀 Added
 - **Rediseño Glassmorphic Calm Tech**: Interfaz web completamente renovada con tarjetas de cristal esmerilado (`backdrop-filter: blur(16px)`), esferas ambientadas flotantes en segundo plano y variables CSS de transición suave (2.5s).
 - **Indicador de Atmósfera Respirante**: Anillo circular dinámico que "respira" suavemente mediante micro-animaciones CSS (`breatheScale`) para mostrar el estado emocional del grupo sin números parpadeantes.
-- **Síntesis Sonora Nativa (Web Audio API)**: Generador de tono armónico de 432 Hz sintetizado nativamente (onda senoidal + armónico 864 Hz) con envolvente de *fade-in* (3s) y *fade-out* exponencial (3s) simulando un cuenco tibetano.
+- **Motor Neuroacústico Nativo (Web Audio API)**: Generador sonoro de 3 osciladores senoidales basados en Resonancia Armónica de 432 Hz, estimulación binaural Alfa (4 Hz de frecuencia diferencial estéreo: 430 Hz / 434 Hz con `StereoPanner` nativos) y síntesis del 1er armónico natural (864 Hz con timbre de cuenco tibetano), controlado por envolvente maestra (*fade-in* de 800ms y *fade-out* de 4s).
 - **Sliders Interactivos de Neurodiversidad**: Controles de rango suaves en lugar de comboboxes rígidos para ajustar la proporción de alumnos Estándar, TDAH, PAS y TEA.
 - **Línea de Tiempo Continua de Píldoras**: Reestructuración del historial de eventos mediante píldoras cromáticas redondeadas con descripciones fluidas.
-- **Soporte Bilingüe (`ES | EN`)**: Conmutador de idioma dinámico con almacenamiento en `localStorage`.
+- **Soporte Bilingüe (`ES | EN`) & Ortografía**: Conmutador de idioma dinámico con almacenamiento en `localStorage` y corrección ortográfica de estados (`Hiperestimulación` en Español y `Overstimulation` en Inglés).
 - **Integración Impeccable**: Verificación y resolución de antipatrones de UI logrando 0 advertencias (`npx impeccable detect`).
-- **ADR 0004**: Documentación de decisiones estéticas, de accesibilidad y de síntesis de audio.
+- **ADR 0004**: Documentación de decisiones estéticas, de accesibilidad y de síntesis neuroacústica de audio.
 
 ## [1.2.0] - 2026-09-20
 

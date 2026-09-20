@@ -658,8 +658,8 @@
         <!-- Anillo Indicador Respirante -->
         <div class="breathing-ring-wrapper">
           <div class="breathing-ring"></div>
-          <div class="ring-center-content">
-            <span id="statusBadgeText" class="ring-status-text">Hiperestimulacion</span>
+          <div class="ring-status-container">
+            <span id="statusBadgeText" class="ring-status-text">Hiperestimulación</span>
             <span id="statusBadgeSub" class="ring-status-sub">Respiración Guiada</span>
           </div>
         </div>
@@ -741,6 +741,10 @@
         btnMitigate: "🧘 Activar Pausa Calm Tech",
         btnReport: "📋 Generar Reporte Semanal",
         reportTitle: "📋 Reporte Psicopedagógico Semanal",
+        stateCalma: "Calma",
+        stateEnfoque: "Enfoque",
+        stateInquietud: "Inquietud",
+        stateHiperestimulacion: "Hiperestimulación",
         statsTotal: "Total",
         statsNeuro: "Neurodiversidad"
       },
@@ -771,6 +775,10 @@
         btnMitigate: "🧘 Trigger Calm Pause",
         btnReport: "📋 Generate Weekly Report",
         reportTitle: "📋 Weekly Pedagogical Report",
+        stateCalma: "Calm",
+        stateEnfoque: "Focus",
+        stateInquietud: "Restlessness",
+        stateHiperestimulacion: "Overstimulation",
         statsTotal: "Total",
         statsNeuro: "Neurodiversity"
       }
@@ -818,12 +826,13 @@
       document.getElementById('i18nReportTitle').innerText = dict.reportTitle;
 
       cargarLineaTiempo();
+      actualizarUI();
     }
 
     /* ==========================================================================
-       WEB AUDIO API: Síntesis Nativa de Cuenco Tibetano a 432 Hz
+       WEB AUDIO API: Motor Neuroacústico Nativo (432 Hz + Binaural Alfa 4 Hz)
        ========================================================================== */
-    function reproducirTonoArmonico432() {
+    function reproducirSonidoConsciente() {
       try {
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         if (!AudioContextClass) return;
@@ -835,33 +844,64 @@
         }
 
         const now = audioCtx.currentTime;
-        const osc1 = audioCtx.createOscillator();
-        const osc2 = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
+        const masterGain = audioCtx.createGain();
 
-        // Tono Fundamental 432 Hz + Armónico Superior 864 Hz
-        osc1.type = 'sine';
-        osc1.frequency.setValueAtTime(432, now);
+        // 1. MASTER GAIN ENVELOPE: Fade-in suave (800ms) + Fade-out exponencial (4s)
+        masterGain.gain.setValueAtTime(0, now);
+        masterGain.gain.linearRampToValueAtTime(0.2, now + 0.8);
+        masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 4.8);
+        masterGain.connect(audioCtx.destination);
 
-        osc2.type = 'sine';
-        osc2.frequency.setValueAtTime(864, now);
+        // 2. ESTIMULACIÓN BINAURAL ALFA (432 Hz ± 2 Hz = 4 Hz de pulso Alfa)
+        const oscLeft = audioCtx.createOscillator();
+        const oscRight = audioCtx.createOscillator();
+        oscLeft.type = 'sine';
+        oscRight.type = 'sine';
+        oscLeft.frequency.setValueAtTime(430, now); // Izquierdo: 432 - 2 Hz
+        oscRight.frequency.setValueAtTime(434, now); // Derecho: 432 + 2 Hz
 
-        // Envolvente suave: Fade-In 3s y Fade-Out exponencial 3s
-        gain.gain.setValueAtTime(0, now);
-        gain.gain.linearRampToValueAtTime(0.2, now + 3);
-        gain.gain.exponentialRampToValueAtTime(0.0001, now + 6);
+        if (typeof audioCtx.createStereoPanner === 'function') {
+          const pannerLeft = audioCtx.createStereoPanner();
+          const pannerRight = audioCtx.createStereoPanner();
+          pannerLeft.pan.setValueAtTime(-0.8, now);
+          pannerRight.pan.setValueAtTime(0.8, now);
 
-        osc1.connect(gain);
-        osc2.connect(gain);
-        gain.connect(audioCtx.destination);
+          oscLeft.connect(pannerLeft);
+          pannerLeft.connect(masterGain);
 
-        osc1.start(now);
-        osc2.start(now);
-        osc1.stop(now + 6.1);
-        osc2.stop(now + 6.1);
+          oscRight.connect(pannerRight);
+          pannerRight.connect(masterGain);
+        } else {
+          oscLeft.connect(masterGain);
+          oscRight.connect(masterGain);
+        }
+
+        // 3. SÍNTESIS DE ARMÓNICOS (1er armónico natural 864 Hz atenuado)
+        const oscHarmonic = audioCtx.createOscillator();
+        const harmonicGain = audioCtx.createGain();
+        oscHarmonic.type = 'sine';
+        oscHarmonic.frequency.setValueAtTime(864, now);
+        harmonicGain.gain.setValueAtTime(0.03, now);
+
+        oscHarmonic.connect(harmonicGain);
+        harmonicGain.connect(masterGain);
+
+        // Reproducción y liberación de recursos
+        oscLeft.start(now);
+        oscRight.start(now);
+        oscHarmonic.start(now);
+
+        const stopTime = now + 4.8;
+        oscLeft.stop(stopTime);
+        oscRight.stop(stopTime);
+        oscHarmonic.stop(stopTime);
       } catch (err) {
-        console.warn('Web Audio API no soportado:', err);
+        console.warn('Web Audio API no soportado o bloqueado por interacción:', err);
       }
+    }
+
+    function reproducirTonoArmonico432() {
+      reproducirSonidoConsciente();
     }
 
     async function actualizarUI() {
@@ -882,8 +922,16 @@
       root.style.setProperty('--text-current', data.paleta.colorTextoHex);
       root.style.setProperty('--accent-current', data.paleta.colorAcentoHex);
 
-      document.getElementById('statusBadgeText').innerText = data.estadoEmocionalTexto.replace('Nivel del Aula: ', '');
       const dict = i18nDict[currentLang];
+      const rawState = data.estadoEmocionalTexto.replace('Nivel del Aula: ', '');
+      const stateMap = {
+        'Calma': dict.stateCalma,
+        'Enfoque': dict.stateEnfoque,
+        'Inquietud': dict.stateInquietud,
+        'Hiperestimulacion': dict.stateHiperestimulacion
+      };
+
+      document.getElementById('statusBadgeText').innerText = stateMap[rawState] || rawState;
       document.getElementById('statusBadgeSub').innerText = data.estadoEmocionalTexto.includes('Calma')
         ? dict.ringSubCalma
         : dict.ringSubHyper;

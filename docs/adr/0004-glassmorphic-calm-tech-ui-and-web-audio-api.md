@@ -22,22 +22,27 @@ Para elevar la experiencia de usuario del educador en el dashboard de **Classroo
    - Definir variables CSS para los 4 estados emocionales del aula con una transición suave de `transition: all 2.5s cubic-bezier(0.4, 0, 0.2, 1)`.
    - Utilizar tarjetas de cristal esmerilado con `backdrop-filter: blur(16px)` y sombras de elevación neutras.
 
-2. **Síntesis Sonora Nativa (Web Audio API)**:
-   - Crear un oscilador senoidal dual (432 Hz fundamental + 864 Hz armónico superior).
-   - Aplicar una envolvente de volumen con *fade-in* lineal de 3s y *fade-out* exponencial de 3s sin depender de librerías de terceros.
+2. **Síntesis Sonora Nativa Neuroacústica (Web Audio API)**:
+   - Implementar un motor neuroacústico de 3 osciladores senoidales:
+     - Oscilador Izquierdo (`430 Hz`, stereo panner `-0.8`).
+     - Oscilador Derecho (`434 Hz`, stereo panner `0.8`).
+     - La diferencia diferencial de `4 Hz` induce estimulación de ondas cerebrales **Alfa** para atención receptiva y calma profunda.
+     - Oscilador Armónico (`864 Hz`, 1er armónico natural) con volumen atenuado (`0.03`) para aportar calidez de cuenco tibetano.
+   - Aplicar una envolvente de volumen maestra con *fade-in* lineal suave de `800ms` y *fade-out* exponencial de `4s` (duración total 4.8s) sin depender de librerías de terceros.
 
 3. **Controles de Configuración con Sliders Interactivos**:
    - Sustituir los selectores rígidos por sliders de rango con badges de valor dinámico para calibrar los grupos de neurodiversidad (Estándar, TDAH, PAS, TEA).
 
-4. **Línea de Tiempo Continua e i18n Bilingüe**:
+4. **Línea de Tiempo Continua e i18n Bilingüe (`ES | EN`)**:
    - Píldoras cromáticas fluidas con tooltips descriptivos.
    - Conmutador directo de idioma (`🇪🇸 ES | 🇬🇧 EN`) que persiste en `localStorage`.
+   - Corrección y estandarización de traducciones y ortografía de estados emocionales: `Hiperestimulación` (Español con tilde) y `Overstimulation` (Inglés).
 
 ---
 
 ## ⚖️ Consecuencias
 
 ### Positivas:
-- **Reducción de Estrés del Docente**: La interfaz transmite calma visual y sonora, eliminando notificaciones intrusivas.
+- **Reducción de Estrés del Docente & Estimulación Neuroacústica**: La interfaz transmite calma visual y estimulación alfa sonora no invasiva, eliminando notificaciones intrusivas.
 - **Cero Dependencias Externas**: Carga ultra-rápida en Vanilla JS + CSS nativo.
 - **Calidad Certificada**: Aprobación de 0 antipatrones en el escáner de Impeccable (`npx impeccable detect`).
