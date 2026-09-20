@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -6,8 +9,8 @@ import mongoose from 'mongoose';
 import { AulaEmocional, NivelEnergia } from '../../domain/entities/AulaEmocional';
 import { PresupuestoDopamina } from '../../domain/entities/PresupuestoDopamina';
 import { TipoNeurodivergencia } from '../../domain/value-objects/PerfilCognitivo';
-import { MockAffectiveAIAdapter } from '../../adapters/ia/MockAffectiveAIAdapter';
-import { MockReporteAIAdapter } from '../../adapters/ia/MockReporteAIAdapter';
+import { GroqAffectiveAIAdapter } from '../../adapters/ia/GroqAffectiveAIAdapter';
+import { GroqReporteAIAdapter } from '../../adapters/ia/GroqReporteAIAdapter';
 import { InMemoryAulaRepository } from '../../adapters/repositories/InMemoryAulaRepository';
 import { InMemoryTelemetriaRepository } from '../../adapters/persistence/InMemoryTelemetriaRepository';
 import { MongoTelemetriaRepository } from '../../adapters/persistence/MongoTelemetriaRepository';
@@ -55,8 +58,8 @@ async function iniciarServidor() {
   // =========================================================================================
   // COMPOSITION ROOT - INYECCIÓN DE DEPENDENCIAS (CLEAN ARCHITECTURE)
   // =========================================================================================
-  const aiAffectiveAdapter = new MockAffectiveAIAdapter();
-  const aiReporteAdapter = new MockReporteAIAdapter();
+  const aiAffectiveAdapter = new GroqAffectiveAIAdapter();
+  const aiReporteAdapter = new GroqReporteAIAdapter();
   const aulaRepository = new InMemoryAulaRepository();
   const telemetryPresenter = new TelemetryPresenter();
   const timelinePresenter = new TimelinePresenter();
