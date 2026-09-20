@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Classroom Calm Tech - Dashboard del Docente</title>
 
-  <!-- GOOGLE FONTS: Instrument Serif (Editorial Premium) & Plus Jakarta Sans (Texto de lectura fluida) -->
+  <!-- GOOGLE FONTS: Plus Jakarta Sans (Titulares Modern Tech) & Inter (Lectura Fluida y Controles) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     /* ==========================================================================
-       ESPECIFICACIÓN VISUAL "MINDFUL PREMIUM" (HERITAGE + EDITORIAL SERIF)
+       ESPECIFICACIÓN VISUAL "CALM MODERN TECH" (SANS-SERIF ESPACIAL & ULTRA-LIMPIO)
        ========================================================================== */
     :root {
       /* Palette Heritage Official Tokens */
@@ -59,9 +59,10 @@
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       font-weight: 400;
       letter-spacing: -0.1px;
+      line-height: 1.6;
       background-color: var(--bg-base);
       color: var(--text-main);
       min-height: 100vh;
@@ -122,7 +123,7 @@
     }
 
     /* ==========================================================================
-       HEADER & CONMUTADOR DE IDIOMA (EDITORIAL SERIF)
+       HEADER & CONMUTADOR DE IDIOMA (CALM MODERN TECH)
        ========================================================================== */
     header {
       width: 100%;
@@ -141,17 +142,16 @@
     }
 
     h1 {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 2.6rem;
-      font-weight: 400;
-      font-style: italic;
-      letter-spacing: 0.5px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 1.95rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
       color: var(--text-main);
-      line-height: 1.1;
+      line-height: 1.2;
     }
 
     .header-subtitle {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.88rem;
       font-weight: 400;
       letter-spacing: -0.1px;
@@ -165,7 +165,7 @@
     }
 
     .lang-btn {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       padding: 8px 16px;
       border-radius: var(--radius-md);
       font-size: 0.82rem;
@@ -192,7 +192,7 @@
     }
 
     /* ==========================================================================
-       LAYOUT PRINCIPAL (GRID DASHBOARD MINDFUL PREMIUM)
+       LAYOUT PRINCIPAL (GRID DASHBOARD CALM MODERN TECH)
        ========================================================================== */
     .dashboard-layout {
       display: grid;
@@ -221,11 +221,10 @@
     }
 
     .card-title {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1.65rem;
-      font-weight: 400;
-      font-style: italic;
-      letter-spacing: 0.5px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
       color: var(--text-main);
       display: flex;
       align-items: center;
@@ -234,7 +233,7 @@
     }
 
     .card-subtitle {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.88rem;
       font-weight: 400;
       letter-spacing: -0.1px;
@@ -244,7 +243,7 @@
     }
 
     /* ==========================================================================
-       BLOQUE 1: CONFIGURACIÓN ADAPTATIVA (SLIDERS MINDFUL PREMIUM)
+       BLOQUE 1: CONFIGURACIÓN ADAPTATIVA (SLIDERS MODERNO-TECNOLÓGICOS)
        ========================================================================== */
     .slider-group {
       margin-bottom: 20px;
@@ -258,7 +257,7 @@
     }
 
     label {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.9rem;
       font-weight: 500;
       letter-spacing: -0.1px;
@@ -266,7 +265,7 @@
     }
 
     .slider-val-badge {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.85rem;
       font-weight: 600;
       letter-spacing: -0.1px;
@@ -305,7 +304,7 @@
 
     .profile-tag {
       display: inline-block;
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.76rem;
       font-weight: 400;
       letter-spacing: -0.1px;
@@ -317,7 +316,7 @@
     }
 
     .btn-primary {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       padding: 14px 20px;
       border-radius: var(--radius-md);
       font-size: 0.88rem;
@@ -345,7 +344,7 @@
       background: rgba(255, 255, 255, 0.7);
       border: 1px solid var(--glass-border);
       font-size: 0.88rem;
-      line-height: 1.4;
+      line-height: 1.6;
       display: none;
       animation: fadeInSmooth 1.5s ease-in-out;
     }
@@ -357,7 +356,7 @@
     }
 
     .stat-badge {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       padding: 4px 12px;
       border-radius: var(--radius-md);
       font-size: 0.8rem;
@@ -368,7 +367,7 @@
     }
 
     /* ==========================================================================
-       BLOQUE 2: MONITOR DE ATMÓSFERA CIRCULAR CON EDITORIAL SERIF
+       BLOQUE 2: MONITOR DE ATMÓSFERA CIRCULAR CON TYPO PLUS JAKARTA SANS
        ========================================================================== */
     .monitor-column {
       display: flex;
@@ -418,16 +417,15 @@
     }
 
     .ring-status-text {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1.5rem;
-      font-weight: 400;
-      font-style: italic;
-      letter-spacing: 0.5px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
       color: var(--text-main);
     }
 
     .ring-status-sub {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.78rem;
       font-weight: 400;
       letter-spacing: -0.1px;
@@ -441,7 +439,7 @@
       justify-content: center;
       gap: 12px;
       margin-top: 12px;
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.85rem;
       font-weight: 400;
       letter-spacing: -0.1px;
@@ -456,7 +454,7 @@
     }
 
     .btn-audio-trigger {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       padding: 6px 14px;
       border-radius: var(--radius-md);
       font-size: 0.8rem;
@@ -490,21 +488,20 @@
     }
 
     .pedagogical-title {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1.35rem;
-      font-weight: 400;
-      font-style: italic;
-      letter-spacing: 0.5px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
       color: var(--text-main);
       margin-bottom: 8px;
     }
 
     .pedagogical-text {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.95rem;
       font-weight: 400;
       letter-spacing: -0.1px;
-      line-height: 1.65;
+      line-height: 1.6;
       color: var(--text-main);
       white-space: pre-line;
     }
@@ -517,7 +514,7 @@
     }
 
     .btn-action {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       padding: 14px 18px;
       border-radius: var(--radius-md);
       font-size: 0.86rem;
@@ -549,13 +546,13 @@
       background: rgba(255, 255, 255, 0.65);
       border: 1px solid var(--glass-border);
       font-size: 0.9rem;
-      line-height: 1.65;
+      line-height: 1.6;
       display: none;
       animation: fadeInSmooth 1.5s ease-in-out;
     }
 
     /* ==========================================================================
-       BLOQUE 3: LÍNEA DE TIEMPO DE PÍLDORAS MINDFUL PREMIUM
+       BLOQUE 3: LÍNEA DE TIEMPO DE PÍLDORAS CALM MODERN TECH
        ========================================================================== */
     .timeline-section {
       width: 100%;
@@ -571,11 +568,10 @@
     }
 
     .timeline-title {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: 1.55rem;
-      font-weight: 400;
-      font-style: italic;
-      letter-spacing: 0.5px;
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
       color: var(--text-main);
       display: flex;
       align-items: center;
@@ -583,7 +579,7 @@
     }
 
     .timeline-subtitle {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.82rem;
       font-weight: 400;
       letter-spacing: -0.1px;
@@ -635,29 +631,29 @@
     }
 
     .pill-time {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-weight: 500;
       font-size: 0.85rem;
       letter-spacing: -0.1px;
     }
 
     .pill-tag {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.82rem;
       font-weight: 500;
       letter-spacing: -0.1px;
     }
 
     .pill-desc {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.88rem;
       font-weight: 400;
       letter-spacing: -0.1px;
-      line-height: 1.45;
+      line-height: 1.5;
     }
 
     .timeline-empty {
-      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      font-family: 'Inter', system-ui, sans-serif;
       font-size: 0.9rem;
       font-weight: 400;
       letter-spacing: -0.1px;

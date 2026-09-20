@@ -27,10 +27,10 @@ Para elevar la experiencia de usuario del educador en el dashboard de **Classroo
    - Definir tarjetas Glassmorphic mate con fondo translúcido (`rgba(255, 255, 255, 0.45)`), `backdrop-filter: blur(12px)`, bordes delgados de `1px solid var(--glass-border)` y bordes pulidos de `8px` (`rounded.md`).
    - Mantener cambios cromáticos fluidos de 2 segundos en transiciones de estado.
 
-2. **Tipografía Estructurada "Mindful Premium"**:
-   - **`Instrument Serif`** (Google Fonts): Aplicada en cursiva editorial (`font-style: italic`, `font-weight: 400`, `letter-spacing: 0.5px`) para los titulares principales (`h1`, `h2`, `h3`) y el indicador de atmósfera grande (`.ring-status-text`).
-   - **`Plus Jakarta Sans`** (Google Fonts): Aplicada para el cuerpo de texto, guiones pedagógicos de IA, controles de rango, etiquetas e indicadores.
-   - **Marcas de Tiempo de Línea de Tiempo (`.pill-time`)**: Uso de la variante `font-weight: 500` de Plus Jakarta Sans para mantener la nitidez y legibilidad sin recurrir a fuentes toscas.
+2. **Tipografía Estructurada "Calm Modern Tech"**:
+   - **`Plus Jakarta Sans`** (Google Fonts): Aplicada con `font-weight: 600` y `letter-spacing: -0.5px` para los titulares principales (`h1`, `h2`, `h3`) y el gran indicador de atmósfera (`.ring-status-text`), logrando un acabado limpio, moderno y espacial.
+   - **`Inter`** (Google Fonts): Aplicada con `font-weight: 400`, `letter-spacing: -0.1px` y `line-height: 1.6` para el cuerpo de texto, guiones de IA, etiquetas de sliders, botones y controles.
+   - **Marcas de Tiempo de Línea de Tiempo (`.pill-time`) & Etiquetas (`.pill-tag`)**: Uso de la variante `font-weight: 500` de Inter con `letter-spacing: -0.1px` para mantener legibilidad perfecta sin recurrir a fuentes toscas.
 
 3. **Síntesis Sonora Nativa Neuroacústica (Web Audio API)**:
    - Implementar un motor neuroacústico de 3 osciladores senoidales:
