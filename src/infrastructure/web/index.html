@@ -31,6 +31,39 @@
       margin-bottom: 24px;
       text-align: center;
       max-width: 800px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lang-switch-container {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .lang-btn {
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.6);
+      color: inherit;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      transition: all 0.3s ease;
+    }
+
+    .lang-btn.active {
+      background: currentColor;
+      color: #FFFFFF;
+    }
+
+    body[style*="background-color"] .lang-btn.active {
+      color: #FFFFFF;
+      filter: brightness(0.85);
     }
 
     h1 {
@@ -403,19 +436,23 @@
 </head>
 <body>
   <header>
-    <h1>Classroom Calm Tech</h1>
-    <p class="header-subtitle">Plataforma Educativa Adaptativa y Regulación Emocional Consciente</p>
+    <div class="lang-switch-container">
+      <button class="lang-btn active" id="btnLangEs" onclick="setLanguage('es')">🇪🇸 Español</button>
+      <button class="lang-btn" id="btnLangEn" onclick="setLanguage('en')">🇬🇧 English</button>
+    </div>
+    <h1 id="i18nHeaderTitle">Classroom Calm Tech</h1>
+    <p id="i18nHeaderSubtitle" class="header-subtitle">Plataforma Educativa Adaptativa y Regulación Emocional Consciente</p>
   </header>
 
-  <!-- LÍNEA DE TIEMPO VISUAL DE ENERGÍA (OPCIÓN 2) -->
+  <!-- LÍNEA DE TIEMPO VISUAL DE ENERGÍA (FASE 1 - OPCIÓN 2) -->
   <section class="timeline-section" aria-labelledby="titleTimeline">
     <div class="timeline-card">
       <div class="timeline-header">
         <h2 id="titleTimeline" class="timeline-title">⏳ Línea de Tiempo de Energía</h2>
-        <span class="timeline-subtitle">Registro de eventos y transiciones pedagógicas</span>
+        <span id="i18nTimelineSubtitle" class="timeline-subtitle">Registro de eventos y transiciones pedagógicas</span>
       </div>
       <div id="timelineContainer" class="timeline-container" role="region" aria-label="Contenedor de línea de tiempo">
-        <p class="timeline-empty">Cargando línea de tiempo del aula...</p>
+        <p id="i18nTimelineEmpty" class="timeline-empty">Cargando línea de tiempo del aula...</p>
       </div>
     </div>
   </section>
@@ -427,39 +464,39 @@
     <section class="card" aria-labelledby="titleConfig">
       <div class="card-header">
         <h2 id="titleConfig" class="card-title">⚙️ Configuración Adaptativa</h2>
-        <p class="card-subtitle">Registra la composición de alumnos según sus perfiles cognitivos para adaptar el presupuesto de salud digital.</p>
+        <p id="i18nConfigSubtitle" class="card-subtitle">Registra la composición de alumnos según sus perfiles cognitivos para adaptar el presupuesto de salud digital.</p>
       </div>
 
       <form id="configForm" onsubmit="guardarConfiguracion(event)">
         <div class="form-group">
-          <label for="numEstandar">Alumnos Estándar</label>
+          <label for="numEstandar" id="lblEstandar">Alumnos Estándar</label>
           <div class="input-wrapper">
             <input type="number" id="numEstandar" min="0" value="15" required />
-            <span class="profile-tag">30 min / 3 premios</span>
+            <span class="profile-tag" id="tagEstandar">30 min / 3 premios</span>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="numTdah">Alumnos TDAH</label>
+          <label for="numTdah" id="lblTdah">Alumnos TDAH</label>
           <div class="input-wrapper">
             <input type="number" id="numTdah" min="0" value="5" required />
-            <span class="profile-tag">20 min / 2 premios</span>
+            <span class="profile-tag" id="tagTdah">20 min / 2 premios</span>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="numAltaSensibilidad">Alumnos Alta Sensibilidad (PAS)</label>
+          <label for="numAltaSensibilidad" id="lblAltaSensibilidad">Alumnos Alta Sensibilidad (PAS)</label>
           <div class="input-wrapper">
             <input type="number" id="numAltaSensibilidad" min="0" value="3" required />
-            <span class="profile-tag">25 min / 1 premio</span>
+            <span class="profile-tag" id="tagAltaSensibilidad">25 min / 1 premio</span>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="numTea">Alumnos Espectro Autista (TEA)</label>
+          <label for="numTea" id="lblTea">Alumnos Espectro Autista (TEA)</label>
           <div class="input-wrapper">
             <input type="number" id="numTea" min="0" value="2" required />
-            <span class="profile-tag">20 min / 1 premio</span>
+            <span class="profile-tag" id="tagTea">20 min / 1 premio</span>
           </div>
         </div>
 
@@ -483,7 +520,7 @@
       </div>
 
       <div class="card-content" aria-label="Orientación Pedagógica del Aula">
-        <h3 class="section-title">Orientación Pedagógica Consciente</h3>
+        <h3 id="i18nPedagogicalTitle" class="section-title">Orientación Pedagógica Consciente</h3>
         <p id="mensajeEmpatico" class="message-text">Conectando con el servidor Calm Tech...</p>
         
         <div id="audioIndicator" class="audio-indicator" style="display: none;">
@@ -493,14 +530,14 @@
       </div>
 
       <nav class="actions-grid" aria-label="Controles del Dashboard">
-        <button onclick="cambiarEstado('Calma')">🌱 Estado: Calma</button>
-        <button onclick="cambiarEstado('Hiperestimulacion')">⚡ Simular Hiperestimulación</button>
-        <button onclick="ejecutarMitigacion()">🧘 Activar Pausa Calm Tech</button>
-        <button onclick="cargarReporte()">📋 Generar Reporte Semanal</button>
+        <button id="btnStateCalm" onclick="cambiarEstado('Calma')">🌱 Estado: Calma</button>
+        <button id="btnStateHyper" onclick="cambiarEstado('Hiperestimulacion')">⚡ Simular Hiperestimulación</button>
+        <button id="btnMitigate" onclick="ejecutarMitigacion()">🧘 Activar Pausa Calm Tech</button>
+        <button id="btnReport" onclick="cargarReporte()">📋 Generar Reporte Semanal</button>
       </nav>
 
       <article id="reportBox" class="report-box" aria-label="Reporte Psicopedagógico Semanal">
-        <h3 class="section-title">📋 Reporte Psicopedagógico Semanal</h3>
+        <h3 id="i18nReportTitle" class="section-title">📋 Reporte Psicopedagógico Semanal</h3>
         <p id="reportContent"></p>
       </article>
     </section>
@@ -509,6 +546,109 @@
 
   <script>
     const API_BASE = 'http://localhost:3000/api';
+    let currentLang = localStorage.getItem('calm_tech_lang') || 'es';
+
+    const i18nDict = {
+      es: {
+        headerTitle: "Classroom Calm Tech",
+        headerSubtitle: "Plataforma Educativa Adaptativa y Regulación Emocional Consciente",
+        timelineTitle: "⏳ Línea de Tiempo de Energía",
+        timelineSubtitle: "Registro de eventos y transiciones pedagógicas",
+        timelineEmpty: "🌱 Sin eventos registrados en la jornada. El aula se mantiene serena.",
+        timelineError: "⚠️ No se pudo cargar la línea de tiempo.",
+        configTitle: "⚙️ Configuración Adaptativa",
+        configSubtitle: "Registra la composición de alumnos según sus perfiles cognitivos para adaptar el presupuesto de salud digital.",
+        lblEstandar: "Alumnos Estándar",
+        lblTdah: "Alumnos TDAH",
+        lblAltaSensibilidad: "Alumnos Alta Sensibilidad (PAS)",
+        lblTea: "Alumnos Espectro Autista (TEA)",
+        btnAplicarConfig: "Aplicar Configuración",
+        tagEstandar: "30 min / 3 premios",
+        tagTdah: "20 min / 2 premios",
+        tagAltaSensibilidad: "25 min / 1 premio",
+        tagTea: "20 min / 1 premio",
+        monitorTitle: "🌿 Monitor de Atmósfera",
+        loadingStatus: "Cargando estado del aula...",
+        pedagogicalTitle: "Orientación Pedagógica Consciente",
+        connectingMsg: "Conectando con el servidor Calm Tech...",
+        btnStateCalm: "🌱 Estado: Calma",
+        btnStateHyper: "⚡ Simular Hiperestimulación",
+        btnMitigate: "🧘 Activar Pausa Calm Tech",
+        btnReport: "📋 Generar Reporte Semanal",
+        reportTitle: "📋 Reporte Psicopedagógico Semanal",
+        statsTotal: "Total",
+        statsNeuro: "Neurodiversidad"
+      },
+      en: {
+        headerTitle: "Classroom Calm Tech",
+        headerSubtitle: "Adaptive Educational Platform & Mindful Emotional Regulation",
+        timelineTitle: "⏳ Energy Visual Timeline",
+        timelineSubtitle: "Log of pedagogical events & emotional transitions",
+        timelineEmpty: "🌱 No events recorded today. The classroom remains peaceful.",
+        timelineError: "⚠️ Could not load timeline.",
+        configTitle: "⚙️ Adaptive Setup",
+        configSubtitle: "Register student composition by cognitive profiles to calibrate digital health budgets.",
+        lblEstandar: "Standard Students",
+        lblTdah: "ADHD Students (TDAH)",
+        lblAltaSensibilidad: "High Sensitivity Students (HSP)",
+        lblTea: "Autism Spectrum Students (ASD)",
+        btnAplicarConfig: "Apply Configuration",
+        tagEstandar: "30 min / 3 rewards",
+        tagTdah: "20 min / 2 rewards",
+        tagAltaSensibilidad: "25 min / 1 reward",
+        tagTea: "20 min / 1 reward",
+        monitorTitle: "🌿 Atmosphere Monitor",
+        loadingStatus: "Loading classroom status...",
+        pedagogicalTitle: "Mindful Pedagogical Guidance",
+        connectingMsg: "Connecting to Calm Tech server...",
+        btnStateCalm: "🌱 State: Calm",
+        btnStateHyper: "⚡ Simulate Overstimulation",
+        btnMitigate: "🧘 Trigger Calm Pause",
+        btnReport: "📋 Generate Weekly Report",
+        reportTitle: "📋 Weekly Pedagogical Report",
+        statsTotal: "Total",
+        statsNeuro: "Neurodiversity"
+      }
+    };
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('calm_tech_lang', lang);
+      document.documentElement.lang = lang;
+
+      document.getElementById('btnLangEs').classList.toggle('active', lang === 'es');
+      document.getElementById('btnLangEn').classList.toggle('active', lang === 'en');
+
+      const dict = i18nDict[lang];
+      document.getElementById('i18nHeaderTitle').innerText = dict.headerTitle;
+      document.getElementById('i18nHeaderSubtitle').innerText = dict.headerSubtitle;
+      document.getElementById('titleTimeline').innerText = dict.timelineTitle;
+      document.getElementById('i18nTimelineSubtitle').innerText = dict.timelineSubtitle;
+      document.getElementById('titleConfig').innerText = dict.configTitle;
+      document.getElementById('i18nConfigSubtitle').innerText = dict.configSubtitle;
+
+      document.getElementById('lblEstandar').innerText = dict.lblEstandar;
+      document.getElementById('lblTdah').innerText = dict.lblTdah;
+      document.getElementById('lblAltaSensibilidad').innerText = dict.lblAltaSensibilidad;
+      document.getElementById('lblTea').innerText = dict.lblTea;
+      document.getElementById('btnAplicarConfig').innerText = dict.btnAplicarConfig;
+
+      document.getElementById('tagEstandar').innerText = dict.tagEstandar;
+      document.getElementById('tagTdah').innerText = dict.tagTdah;
+      document.getElementById('tagAltaSensibilidad').innerText = dict.tagAltaSensibilidad;
+      document.getElementById('tagTea').innerText = dict.tagTea;
+
+      document.getElementById('titleMonitor').innerText = dict.monitorTitle;
+      document.getElementById('i18nPedagogicalTitle').innerText = dict.pedagogicalTitle;
+
+      document.getElementById('btnStateCalm').innerText = dict.btnStateCalm;
+      document.getElementById('btnStateHyper').innerText = dict.btnStateHyper;
+      document.getElementById('btnMitigate').innerText = dict.btnMitigate;
+      document.getElementById('btnReport').innerText = dict.btnReport;
+      document.getElementById('i18nReportTitle').innerText = dict.reportTitle;
+
+      cargarLineaTiempo();
+    }
 
     async function actualizarUI() {
       try {
@@ -543,12 +683,13 @@
      */
     async function cargarLineaTiempo() {
       const container = document.getElementById('timelineContainer');
+      const dict = i18nDict[currentLang];
       try {
         const res = await fetch(`${API_BASE}/aula/linea-tiempo?aulaId=aula-4a`);
         const bloques = await res.json();
 
         if (!Array.isArray(bloques) || bloques.length === 0) {
-          container.innerHTML = '<p class="timeline-empty">🌱 Sin eventos registrados en la jornada. El aula se mantiene serena.</p>';
+          container.innerHTML = `<p class="timeline-empty">${dict.timelineEmpty}</p>`;
           return;
         }
 
@@ -564,7 +705,7 @@
 
       } catch (err) {
         console.error('Error al cargar la línea de tiempo:', err);
-        container.innerHTML = '<p class="timeline-empty">⚠️ No se pudo cargar la línea de tiempo.</p>';
+        container.innerHTML = `<p class="timeline-empty">${dict.timelineError}</p>`;
       }
     }
 
@@ -592,14 +733,15 @@
         const resultBox = document.getElementById('configResultBox');
         const msgText = document.getElementById('configMsgText');
         const statsSummary = document.getElementById('statsSummary');
+        const dict = i18nDict[currentLang];
 
         resultBox.style.display = 'block';
 
         if (res.ok && data.exito) {
           msgText.innerText = `✅ ${data.mensaje}`;
           
-          document.getElementById('badgeTotal').innerText = `Total: ${data.totalAlumnos} alumnos`;
-          document.getElementById('badgeNeuro').innerText = `Neurodiversidad: ${data.porcentajeNeurodivergencia}%`;
+          document.getElementById('badgeTotal').innerText = `${dict.statsTotal}: ${data.totalAlumnos}`;
+          document.getElementById('badgeNeuro').innerText = `${dict.statsNeuro}: ${data.porcentajeNeurodivergencia}%`;
           statsSummary.style.display = 'flex';
           
           // Actualizar la línea de tiempo suavemente
@@ -661,8 +803,8 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      setLanguage(currentLang);
       actualizarUI();
-      cargarLineaTiempo();
     });
   </script>
 </body>
