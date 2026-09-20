@@ -2,6 +2,15 @@
 
 Todos los cambios notables en este proyecto serán documentados en este archivo siguiendo el formato de [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/) y la convención de [Conventional Commits](https://www.conventionalcommits.org/).
 
+## [1.4.0] - 2026-09-20
+
+### 🚀 Added
+- **Resiliencia & Rate Limit (HTTP 429)**: Creación de la clase de error de dominio `RateLimitError` en `src/application/errors/RateLimitError.ts` con soporte para guiones de contingencia socrática de pausas activas.
+- **Middleware Global de Errores Express**: Inyección del middleware de control de errores en `src/infrastructure/web/server.ts` para interceptar excepciones `RateLimitError` y responder con HTTP 429 y JSON con el campo `pausaActivaContenido`.
+- **Captura Resiliente en Groq SDK**: Actualización de `GroqAffectiveAIAdapter` y `GroqReporteAIAdapter` para atrapar respuestas 429 de la Free Tier de Groq API y relanzar `RateLimitError` limpio de dominio.
+- **Pruebas Unitarias TDD**: Cobertura de pruebas en `RateLimitError.spec.ts` ejecutadas mediante Jest (13/13 tests pasados).
+- **ADR 0005**: Registro de decisión sobre resiliencia, manejo global de errores y cuotas de IA.
+
 ## [1.3.0] - 2026-09-20
 
 ### 🚀 Added

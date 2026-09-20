@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import path from 'path';
 import mongoose from 'mongoose';
@@ -9,6 +9,7 @@ import mongoose from 'mongoose';
 import { AulaEmocional, NivelEnergia } from '../../domain/entities/AulaEmocional';
 import { PresupuestoDopamina } from '../../domain/entities/PresupuestoDopamina';
 import { TipoNeurodivergencia } from '../../domain/value-objects/PerfilCognitivo';
+import { RateLimitError } from '../../application/errors/RateLimitError';
 import { GroqAffectiveAIAdapter } from '../../adapters/ia/GroqAffectiveAIAdapter';
 import { GroqReporteAIAdapter } from '../../adapters/ia/GroqReporteAIAdapter';
 import { InMemoryAulaRepository } from '../../adapters/repositories/InMemoryAulaRepository';
@@ -158,7 +159,7 @@ async function iniciarServidor() {
     }
   });
 
-  app.get(['/api/aula/reporte', '/api/aula/reporte-semanal'], async (_req: Request, res: Response) => {
+  app.get(['/api/aula/reporte', '/api/aula/reporte-semanal'], async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const reporte = await generarReporteSemanalUseCase.ejecutar({
         aulaId: 'aula-4a',
@@ -169,7 +170,7 @@ async function iniciarServidor() {
       });
       return res.json(reporte);
     } catch (error: any) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   });
 
@@ -217,7 +218,7 @@ async function iniciarServidor() {
     }
   });
 
-  app.post('/api/aulas/:id/mitigar', async (req: Request, res: Response) => {
+  app.post('/api/aulas/:id/mitigar', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
       const { descripcionProfesor } = req.body as { descripcionProfesor: string };
@@ -241,11 +242,11 @@ async function iniciarServidor() {
         uiState
       });
     } catch (error: any) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   });
 
-  app.post('/api/aulas/:id/reporte-semanal', async (req: Request, res: Response) => {
+  app.post('/api/aulas/:id/reporte-semanal', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
       const { observacionesDocente } = req.body as { observacionesDocente: string[] };
@@ -257,7 +258,7 @@ async function iniciarServidor() {
 
       return res.json(reporte);
     } catch (error: any) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   });
 
@@ -265,7 +266,7 @@ async function iniciarServidor() {
    * POST /api/estudiante/solicitar-premio
    * Regulador del Presupuesto de Dopamina con soporte adaptativo para neurodiversidad.
    */
-  app.post('/api/estudiante/solicitar-premio', async (req: Request, res: Response) => {
+  app.post('/api/estudiante/solicitar-premio', async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { estudianteId, aulaId, tiempoSesionActualMinutos, tipoNeurodivergencia } = req.body as {
         estudianteId: string;
@@ -289,17 +290,50 @@ async function iniciarServidor() {
 
       return res.json(resultado);
     } catch (error: any) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
   });
 
-  app.get('/api/telemetria', async (_req: Request, res: Response) => {
+  app.get('/api/telemetria', async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const eventos = await telemetriaRepository.obtenerEventos();
       return res.json(eventos);
     } catch (error: any) {
-      return res.status(500).json({ error: error.message });
+      return next(error);
     }
+  });
+
+  // =========================================================================================
+  // MIDDLEWARE DE CONTROL DE ERRORES GLOBALES (EXPRESS ERROR HANDLER)
+  // =========================================================================================
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    if (err instanceof RateLimitError || err?.name === 'RateLimitError' || err?.status === 429) {
+      console.warn(`🛡️ [Middleware Global RateLimitError] 429 Interceptado: ${err.message}`);
+      return res.status(429).json({
+        error: 'Límite de peticiones a la API de IA alcanzado (Rate Limit 429).',
+        mensaje: err.message,
+        pausaActivaContenido: err.pausaActivaContenido || `
+[PAUSA CALM TECH CONTINGENCIA SOCRÁTICA]
+
+1. ANCLAJE CORPORAL:
+   "Deslicemos suavemente las manos fuera de las pantallas y apoyemos ambos pies con firmeza en el suelo."
+
+2. RESPIRACIÓN CONSCIENTE:
+   "Inhalamos profundo en 1, 2, 3... retenemos la serenidad... y exhalamos despacio en 4, 3, 2, 1."
+
+3. REFLEXIÓN SOCRÁTICA:
+   "Cuando la tecnología requiere una pausa, ¿cómo podemos nosotros cultivar nuestra propia tranquilidad y foco interior?"
+
+4. RETORNO AMABLE:
+   "Con esa claridad y serenidad, retomamos nuestras actividades pedagógicas."
+`.trim()
+      });
+    }
+
+    console.error('❌ [Error Global No Controlado]:', err);
+    return res.status(err.status || 500).json({
+      error: err.message || 'Error interno del servidor'
+    });
   });
 
   // =========================================================================================

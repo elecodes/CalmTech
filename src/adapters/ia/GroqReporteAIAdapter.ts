@@ -4,6 +4,7 @@ import {
   OpcionesReporteSemanal,
   ReportePedagogicoSemanal
 } from '../../application/ports/IReportePedagogicoService';
+import { RateLimitError } from '../../application/errors/RateLimitError';
 
 /**
  * Adaptador real para la generación de reportes psicopedagógicos empáticos mediante Groq SDK (Modelo groq/compound-mini).
@@ -31,14 +32,33 @@ export class GroqReporteAIAdapter implements IReportePedagogicoService {
     try {
       return await this.solicitarReporteGroq(this.primaryModel, opciones);
     } catch (primaryError: any) {
+      if (this.esRateLimitError(primaryError)) {
+        throw new RateLimitError(
+          `Límite de peticiones de Groq API rebasado (429 Rate Limit) al generar reporte con modelo primario (${this.primaryModel}).`
+        );
+      }
       console.warn(`⚠️ Error en modelo primario de reporte (${this.primaryModel}): ${primaryError.message}. Intentando modelo de respaldo...`);
       try {
         return await this.solicitarReporteGroq(this.fallbackModel, opciones);
       } catch (fallbackError: any) {
+        if (this.esRateLimitError(fallbackError)) {
+          throw new RateLimitError(
+            `Límite de peticiones de Groq API rebasado (429 Rate Limit) al generar reporte con modelo de respaldo (${this.fallbackModel}).`
+          );
+        }
         console.error(`⚠️ Error al generar reporte desde Groq API:`, fallbackError.message);
         return this.generarReporteFallback(opciones);
       }
     }
+  }
+
+  private esRateLimitError(error: any): boolean {
+    return (
+      error?.status === 429 ||
+      error?.statusCode === 429 ||
+      (typeof error?.message === 'string' && error.message.includes('429')) ||
+      (typeof error?.code === 'string' && error.code === 'rate_limit_exceeded')
+    );
   }
 
   private async solicitarReporteGroq(modelo: string, opciones: OpcionesReporteSemanal): Promise<ReportePedagogicoSemanal> {

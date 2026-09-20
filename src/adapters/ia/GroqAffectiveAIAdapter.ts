@@ -1,5 +1,6 @@
 import Groq from 'groq-sdk';
 import { IAnafectivaService, OpcionesPausa } from '../../application/ports/IAnafectivaService';
+import { RateLimitError } from '../../application/errors/RateLimitError';
 
 /**
  * Adaptador real para la IA Afectiva utilizando la API oficial de Groq (Modelo groq/compound-mini).
@@ -27,14 +28,33 @@ export class GroqAffectiveAIAdapter implements IAnafectivaService {
     try {
       return await this.solicitarCompletadoGroq(this.primaryModel, opciones);
     } catch (primaryError: any) {
+      if (this.esRateLimitError(primaryError)) {
+        throw new RateLimitError(
+          `Límite de peticiones de Groq API rebasado (429 Rate Limit) en modelo primario (${this.primaryModel}).`
+        );
+      }
       console.warn(`⚠️ Error con modelo primario (${this.primaryModel}): ${primaryError.message}. Intentando modelo de respaldo (${this.fallbackModel})...`);
       try {
         return await this.solicitarCompletadoGroq(this.fallbackModel, opciones);
       } catch (fallbackError: any) {
+        if (this.esRateLimitError(fallbackError)) {
+          throw new RateLimitError(
+            `Límite de peticiones de Groq API rebasado (429 Rate Limit) en modelo de respaldo (${this.fallbackModel}).`
+          );
+        }
         console.error(`⚠️ Error al llamar a la API de Groq:`, fallbackError.message);
         return this.generarPausaFallback(opciones);
       }
     }
+  }
+
+  private esRateLimitError(error: any): boolean {
+    return (
+      error?.status === 429 ||
+      error?.statusCode === 429 ||
+      (typeof error?.message === 'string' && error.message.includes('429')) ||
+      (typeof error?.code === 'string' && error.code === 'rate_limit_exceeded')
+    );
   }
 
   private async solicitarCompletadoGroq(modelo: string, opciones: OpcionesPausa): Promise<string> {

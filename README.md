@@ -28,9 +28,9 @@ El proyecto sigue la regla de dependencia unidireccional hacia adentro:
 
 ### Capas del Proyecto:
 - **`src/domain/`**: Entidades del modelo de negocio ([AulaEmocional.ts](file:///Users/elena/Developer/Caml_Tech/src/domain/entities/AulaEmocional.ts), [PresupuestoDopamina.ts](file:///Users/elena/Developer/Caml_Tech/src/domain/entities/PresupuestoDopamina.ts)) y Value Objects ([PerfilCognitivo.ts](file:///Users/elena/Developer/Caml_Tech/src/domain/value-objects/PerfilCognitivo.ts)). Sin dependencias de frameworks.
-- **`src/application/`**: Casos de uso ([ConfigurarComposicionAula.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/ConfigurarComposicionAula.ts), [MitigarSobreestimulacion.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/MitigarSobreestimulacion.ts), [GenerarReporteSemanalAula.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/GenerarReporteSemanalAula.ts), [ValidarYConcederPremioConsciente.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/ValidarYConcederPremioConsciente.ts)) y puertos.
+- **`src/application/`**: Casos de uso ([ConfigurarComposicionAula.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/ConfigurarComposicionAula.ts), [MitigarSobreestimulacion.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/MitigarSobreestimulacion.ts), [GenerarReporteSemanalAula.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/GenerarReporteSemanalAula.ts), [ValidarYConcederPremioConsciente.ts](file:///Users/elena/Developer/Caml_Tech/src/application/use-cases/ValidarYConcederPremioConsciente.ts)), excepciones de dominio ([RateLimitError.ts](file:///Users/elena/Developer/Caml_Tech/src/application/errors/RateLimitError.ts)) y puertos.
 - **`src/adapters/`**: Adaptadores de interfaz ([TimelinePresenter.ts](file:///Users/elena/Developer/Caml_Tech/src/adapters/presenters/TimelinePresenter.ts), [TelemetryPresenter.ts](file:///Users/elena/Developer/Caml_Tech/src/adapters/presenters/TelemetryPresenter.ts), adaptadores reales de IA con Groq y repositorios MongoDB).
-- **`src/infrastructure/`**: Servidor HTTP Express ([server.ts](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/web/server.ts)), persistencia Mongoose, script seeder ([seed.ts](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/database/mongo/seed.ts)) y frontend web accesible de dos columnas ([index.html](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/web/index.html)).
+- **`src/infrastructure/`**: Servidor HTTP Express con middleware global de errores ([server.ts](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/web/server.ts)), persistencia Mongoose, script seeder ([seed.ts](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/database/mongo/seed.ts)) y frontend web accesible ([index.html](file:///Users/elena/Developer/Caml_Tech/src/infrastructure/web/index.html)).
 
 ---
 
@@ -47,12 +47,13 @@ El sistema ajusta dinámicamente los límites biológicos de exposición y recom
 
 ---
 
-## 🤖 Integración Real con Groq SDK (IA Generativa)
+## 🤖 Integración Real con Groq SDK (IA Generativa & Resiliencia 429)
 
 El sistema utiliza la API oficial de **Groq** (`groq-sdk`) impulsada por modelos de lenguaje de baja latencia (`groq/compound-mini` y `qwen/qwen3.8-27b`):
 - **IA Afectiva (`GroqAffectiveAIAdapter`)**: Generación en vivo de pausas activas socráticas de 4 momentos (`max_tokens: 350`).
 - **IA Psicopedagógica (`GroqReporteAIAdapter`)**: Generación de reportes semanales en formato `json_object` estructurado (`max_tokens: 500`).
-- **Resiliencia y Fallback**: Modo de contingencia automático si no se configura la variable `GROQ_API_KEY`.
+- **Resiliencia y Control de Rate Limit (HTTP 429)**: Detección automática de sobrepaso de cuotas de la Free Tier de Groq API, convirtiendo excepciones de infraestructura en `RateLimitError` de dominio con guión de contingencia socrática.
+- **Middleware Global de Errores**: Middleware de Express que captura excepciones 429 devolviendo una respuesta JSON estructurada con el campo `pausaActivaContenido` listo para renderizado en UI sin afectar al usuario.
 
 ---
 
